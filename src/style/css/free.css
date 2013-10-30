@@ -1,0 +1,35 @@
+.free_box {
+  border: 1px solid #cccccc;
+  width: 958px;
+  margin: 0px auto;
+  background: url("form_bottom.gif") 0px bottom no-repeat;
+  padding: 40px 0px  140px 0px; }
+
+.free_form {
+  width: 400px;
+  padding-left: 60px; }
+  .free_form .items {
+    width: 100%;
+    float: left;
+    line-height: 30px;
+    margin-bottom: 10px; }
+    .free_form .items span {
+      float: left;
+      display: block;
+      width: 102px;
+      line-height: 30px;
+      text-align: right;
+      font-size: 14px;
+      color: #666666; }
+    .free_form .items input {
+      line-height: 18px;
+      border: 1px solid #DDDDDD;
+      padding: 4px 6px;
+      width: 100px; }
+    .free_form .items input.biginput {
+      width: 250px; }
+
+.free_word {
+  width: 445px;
+  padding-left: 25px;
+  border-left: 1px dotted #705829; }

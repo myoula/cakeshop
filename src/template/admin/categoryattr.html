@@ -1,0 +1,48 @@
+{% extends "layout/admin.html" %}
+
+{% block title %}设置{{category.name}}属性{% endblock %}
+
+{% block content %}
+<div class="mb10 fl"><a class="but" href="/admin/categorys" >返回分类管理</a>   <a href="/admin/addcategoryattr/{{category.id}}" class="but">添加 {{category.name}} 的属性</a></div>
+<hr>
+<h1>{{category.name}}  的属性管理</h1>
+{%set messages=handler.get_flashed_messages() %}
+{%if messages%}
+    <div class="msg">
+        {% for type, msg in messages%}
+            <span>{{msg}}</span>
+        {% endfor %}
+    </div>
+{%endif%}
+
+{% if categoryattrs -%}
+  <table class="table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>属性名</th>
+              <th>属性默认</th>
+              <th>排序</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for categoryattr in categoryattrs -%}
+            <tr>
+              <td>{{categoryattr.id}}</td>
+              <td>{{categoryattr.name}}</td>
+              <td>{{categoryattr.dec}}</td>
+              <td>{{category.order}}</td>
+              <td><a href="/admin/editcategoryattr/{{categoryattr.id}}">修改</a> / <a href="/admin/delcategoryattr/{{categoryattr.id}}">删除</a></td>
+            </tr>
+		{%- endfor %}
+          </tbody>
+        </table>
+        {{pagehtml}}
+{%- else -%}
+
+<p>暂无分类属性</p>
+
+{%- endif %}
+
+{% endblock %}

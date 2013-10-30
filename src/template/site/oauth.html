@@ -1,0 +1,9 @@
+{% extends "layout/site.html" %}
+{% block title %}社会化登录{% endblock %}
+{% block content %}
+<p>
+    <img src="{{oauth['profile_image_url']}}">
+    你好 {{oauth['screen_name']}}！
+</p>
+    <a href="/signup?next={{next}}">注册新用户</a> <a href="/signin?next={{next}}">绑定已有用户</a>
+{% endblock %}

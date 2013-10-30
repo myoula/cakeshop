@@ -1,0 +1,130 @@
+{% extends "layout/site.html" %}
+
+{% block title %}我的购物车{% endblock %}
+{% block css %}shopping{% endblock %}
+{% block js %}shop{% endblock %}
+{% block content %}
+<div class="blank20"></div>
+{% if orderitems %}
+<div class="wapper">
+	<div class="shoppingprocess pro1"></div>
+</div>
+<div class="blank20"></div>
+
+<div class="wapper">
+	<table  width="100%" border="1" rules="rows" class="m_table">
+        <tr class="bgdd">
+            <td width="2%" height="30px">&nbsp;</td>
+            <td width="58%">商品信息</td>
+            <td width="10%">价格</td>
+            <td width="10%">数量</td>
+            <td width="10%">小计</td>
+            <td width="10%">操作</td>
+        </tr>
+        {% for orderitem in orderitems %}
+        <tr>
+            <td width="2%" height="90px;"></td>
+            <td>
+                <a class="fl"><img src="/upload/{{orderitem.shop.cover}}"></a>
+                <p class="fl ml10 fs12">
+                    <a class="fs14">{{orderitem.shop.name}}</a><br>
+                    {%if orderitem.shopattr -%}规格：{{orderitem.shopattr.name}}{%-endif%} 免费配送10套餐具
+                </p>
+            </td>
+            {%if orderitem.shopattr%}
+            {%set price = orderitem.shopattr.price%}
+            {%else%}
+            {%set price = orderitem.shop.price%}
+            {%endif%}
+            <td class="oc">
+                ￥{{price}} 
+            </td>
+            <td>
+               <span class="cakenumbox">
+                   <input type="text" name="num" value="{{orderitem.num}}" size="4" maxlength="4" data="{{price}}" data-id="{{orderitem.id}}" class="num"/>
+                   <span class="increase titico"></span>
+                   <span class="decrease titico"></span>
+               </span>
+            </td>
+            <td class="orderitemtotalprice">
+                ￥{{price * orderitem.num}}
+            </td>
+            <td>
+                <a class="oc fs14 orderitemdel" style="cursor:pointer" data-id="{{orderitem.id}}">删除</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+	<div class="mt10 fs14 clearfix">
+        <div class="fr">商品件数<font class="oc">{{orderitems|length}}</font>件 待付商品金额(不含运费)<font class="oc" id="totalprice">￥0元</font></div>
+    </div>
+    <div class="blank10"></div>
+    <div class="clearfix">
+         <a  class="sbut titico db fr tac" href="/settle">去结算</a> <a class="gbut titico db fr mr5 tac" href="/list/">继续购物</a>
+    </div>
+	 <div class="blank20"></div>
+     
+     
+     
+    <div class="titico dapei wapper"></div>
+    <div class="wapper">
+        <ul class="dapeishopping">
+        	{% for shop in ashops-%}
+            <li>
+               <div class="up">
+                   <a><img src="/upload/{{shop.cover}}" /></a>
+                   <p>&nbsp;</p>
+                   <p class="mb10">{{shop.name}} </p>
+                   <p class="oc">￥{{shop.price}}</p>
+                   <input type="button" class="titico sbut fn fs14 dapeiadd" data-id="{{order.id}}/{{shop.id}}" value="添加到购物车"/>
+               </div>
+               <div class="down">{{shop.resume}}</div>
+            </li>
+			{%-endfor%}
+        </ul>
+    </div>
+</div>
+{% else %}
+
+<div class="wapper">购物车里是空</div>
+{% endif %}
+<script>
+Do(function(){
+	function settotalprice(){
+		var price = 0;
+			$('input.num').each(function(i){
+				price += parseInt($(this).attr('data')) * parseInt($(this).val())
+			})
+			$('#totalprice').html('￥' + price + '元');
+	}
+	settotalprice();
+	var xsrf='{{handler.xsrf_token}}';
+    $('input.num').change(function(event) {
+        var num = parseInt($(this).val());
+        //if (num > 0)
+        //{
+			$(this).closest('td').siblings('.orderitemtotalprice').text('￥' + parseInt($(this).attr('data')) * num);
+            $.post('/ajax/changeorder', {oiid : $(this).attr('data-id'), num : num, _xsrf : xsrf}, function(data) {
+            }, 'json');
+        //}
+		settotalprice();
+    });
+	$('.dapeiadd').click(function(){
+		var id = $(this).attr('data-id');
+		$.post("/ajax/orderacc/" + id ,{_xsrf : xsrf}, function(){
+			window.location.reload();
+		});
+		
+	})
+	$('.orderitemdel').click(function(){
+		var id = $(this).attr('data-id');
+		$.get("/ajax/delorder/" + id ,{_xsrf : xsrf}, function(){
+			window.location.reload();
+		});
+	})
+})  
+</script>
+{% endblock %}
+
+{% block foot %}
+{% endblock %}

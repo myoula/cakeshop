@@ -1,0 +1,41 @@
+{% extends "layout/admin.html" %}
+
+{% block title %}分类管理{% endblock %}
+
+{% block content %}
+<div class="mb10 fl"><a class="but" href="/admin/addad">添加首页广告</a></div>
+<hr/>
+<h1>首页广告管理</h1>
+{%set messages=handler.get_flashed_messages() %}
+{%if messages%}
+    <div class="msg">
+        {% for type, msg in messages%}
+            <span>{{msg}}</span>
+        {% endfor %}
+    </div>
+{%endif%}
+{% if ads -%}
+<table class="table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>图片</th>
+      <th>访问地址</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for ad in ads -%}
+    <tr>
+      <td>{{ad.id}}</td>
+      <td><img src="/upload/ad/{{ad.id}}.jpg" width="100" height="60"></td>
+      <td>{{ad.url}}</td>
+      <td><a href="/admin/editad/{{ad.id}} ">修改</a> / <a href="/admin/delad/{{ad.id}} ">删除</a></td>
+    </tr>
+{%- endfor %}
+  </tbody>
+</table>
+{%- else -%}
+<p>暂无广告</p>
+{%- endif %}
+{% endblock %}

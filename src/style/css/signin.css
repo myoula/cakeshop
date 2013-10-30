@@ -1,0 +1,90 @@
+.free_box {
+  border: 1px solid #cccccc;
+  width: 958px;
+  margin: 0px auto;
+  background: url("form_bottom.gif") 0px bottom no-repeat;
+  padding: 40px 0px  140px 0px; }
+  .free_box .global_pop_title {
+    background: url("global_pop_title.gif") no-repeat; }
+  .free_box .global_popwin {
+    margin: 10px; }
+    .free_box .global_popwin .login {
+      background-position: 0px 0px;
+      width: 600px;
+      height: 30px;
+      margin-left: 120px; }
+    .free_box .global_popwin .register {
+      background-position: 0px -38px;
+      width: 600px;
+      height: 30px;
+      margin-left: 120px; }
+    .free_box .global_popwin .pop_form .login_form {
+      width: 400px;
+      height: auto;
+      border-right: 1px dotted #705829;
+      float: left;
+      display: block;
+      margin-left: 80px; }
+      .free_box .global_popwin .pop_form .login_form .item {
+        width: 100%;
+        height: 30px;
+        margin-bottom: 10px;
+        background: #ffffff; }
+        .free_box .global_popwin .pop_form .login_form .item span {
+          width: 90px;
+          float: left;
+          display: block;
+          text-align: right;
+          line-height: 30px;
+          height: 30px;
+          color: #666666;
+          font-size: 14px;
+          padding: 0px !important; }
+        .free_box .global_popwin .pop_form .login_form .item input {
+          line-height: 20px;
+          height: 20px;
+          margin-top: 2px;
+          width: 150px;
+          border: 1px solid #dddddd;
+          padding: 2px 4px; }
+        .free_box .global_popwin .pop_form .login_form .item .agree {
+          float: left;
+          display: block;
+          line-height: 24px;
+          height: 24px; }
+      .free_box .global_popwin .pop_form .login_form .itembut {
+        width: 100%;
+        height: 30px;
+        margin-bottom: 10px; }
+        .free_box .global_popwin .pop_form .login_form .itembut span {
+          width: 90px;
+          float: left;
+          display: block;
+          text-align: right;
+          line-height: 30px;
+          height: 30px;
+          color: #666666;
+          font-size: 14px; }
+      .free_box .global_popwin .pop_form .login_form .itemword {
+        padding-left: 80px;
+        margin-bottom: 5px; }
+    .free_box .global_popwin .pop_form .link_form {
+      width: 189px;
+      height: auto;
+      float: left;
+      display: block;
+      padding: 20px 0px 0px 30px; }
+    .free_box .global_popwin .xinlang {
+      background-position: -4px -80px;
+      padding-left: 20px;
+      line-height: 20px;
+      height: 20px;
+      display: block;
+      float: left; }
+    .free_box .global_popwin .zhifubao {
+      background-position: -140px -80px;
+      padding-left: 20px;
+      line-height: 20px;
+      height: 20px;
+      display: block;
+      float: left; }

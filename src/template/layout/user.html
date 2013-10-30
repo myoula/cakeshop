@@ -1,0 +1,120 @@
+<html>
+
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+	<meta property="wb:webmaster" content="988c9b63cde60b6c" />
+    <meta property="wb:webmaster" content="0e03360b1b54b22f" />
+
+    <title>{% block title %}用户中心{% endblock %}</title>
+	<link type="text/css" rel="stylesheet" href="/style/css/global.css" />
+    <link type="text/css" rel="stylesheet" href="/style/css/common.css" />
+    <link type="text/css" rel="stylesheet" href="/style/css/{% block css %}{% endblock %}.css" />
+    <script src="/style/js/do.js"></script>
+    <script src="/style/js/common.js"></script>
+</head>
+
+<body>
+<div class="wapper head">
+    <div class="headtel">免费配送 0519-81297639 </div>
+    <div class="fr headinfo">
+        <div id="userinfo" class="fr">
+        {% if user -%}<a>你好{{user.mobile}}</a><span class="fl">&nbsp;</span><a href="/signout">退出</a><a href="/order"  class="ico shopping">我的购物车</a><span class="fl">&nbsp;|&nbsp;</span><a href="/user">我的订单</a> {%if user.group == 9 -%}<span class="fl">&nbsp;|&nbsp;</span><a href="/admin">网站管理</a> {%endif %}
+        {%-else-%}<a href="/signin">登录</a><span class="fl">&nbsp;|&nbsp;</span><a href="/signup">注册</a> <a href="/order"  class="ico shopping">我的购物车</a>{%-endif%}</div>
+        <div id="global_search" class="fr"><form action="/list/" method="get"><input type="text" class="txt fl" name="keyword" ><input type="submit" value="搜索" class="but fr"></form></div>
+    </div>
+</div>
+<div class="blank20"></div>
+<div class="wapper nav pr overvisible pr zindex1">
+    <ul class="clearfix navul">
+        <li>
+            <a href="/" class="dropdown-toggle">首页</a>
+        </li>
+        <li class="dropdown">
+            <a href="/list/" class="dropdown-toggle">蛋糕名录</a>
+            <ul class="dropdown-menu">
+                <li><a href="/list/?order=orders">销量排行</a></li>
+                <li><a href="/list/">新品上市</a></li>
+                <li><a href="/list/mousse">慕斯蛋糕</a></li>
+                <li><a href="/list/chocolate">巧克力蛋糕</a></li>
+                <li><a href="/list/cheese">乳酪蛋糕</a></li>
+                <li><a href="/list/creambutter">乳脂奶油蛋糕</a></li>
+                <li><a href="/list/icecream">冰淇淋蛋糕</a></li>
+                <li><a href="/list/credit">积分商品</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="/recomm/">产品推荐</a>
+        </li>
+        <li><a href="/p/aboutus">吉米的厨房</a></li>
+        <li class="dropdown">
+        	<a href="/apply" class="dropdown-toggle">集团购买/会员特惠</a>
+        	<ul class="dropdown-menu">
+                <li><a href="/apply">免费品尝</a></li>
+                <li><a href="/p/vip">吉米的厨房VIP</a></li>
+                <li><a href="/p/tehuiri">会员特惠日</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="/user" class="dropdown-toggle">我是会员</a>
+                <ul class="dropdown-menu">
+                    <li><a href="/user">会员首页</a></li>
+                    <li><a href="/user/profile">会员信息</a></li>
+                    <li><a href="/user/orders">我的订单</a></li>
+                    <li><a href="/user/address">收货地址</a></li>
+                    <li><a href="/user/password">找回/修改密码</a></li>
+                    <li><a href="/user/consults">我的咨询</a></li>
+                    <li><a href="/user/credits">我的积分</a></li>
+                    <li><a href="/user/marks">我的纪念日</a></li>
+                </ul>
+
+        </li>
+    </ul>
+</div>
+<div class="blank20"></div>
+<div class="wapper">
+        <div class="leftwapper fl">
+            <dl>
+                <dt><a href="/user">会员中心</a></dt>
+                <dd><a href="/user/profile">会员信息</a></dd>
+                <dd><a href="/user/orders">我的订单</a></dd>
+                <dd><a href="/user/address">收货地址</a></dd>
+                <dd><a href="/user/password">修改密码</a></dd>
+                <dd><a href="/user/consults">我的咨询</a></dd>
+                <dd><a href="/user/credits">我的积分</a></dd>
+                <dd><a href="/user/marks">我的纪念日</a></dd>
+            </dl>
+        </div>
+		<div class="rightwapper fr">
+		{% block content %}&nbps;{% endblock %}
+		</div>
+</div>
+
+    <script src="http://upcdn.b0.upaiyun.com/libs/jquery/jquery-1.4.4.min.js"></script>
+
+<div class="blank10"></div>
+    <div class="wapper foot">
+        <ul class="clearfix mb20">
+            <li class="ico logo"></li>
+            <li class="ico peisong"></li>
+            <li class="ico baozhang"></li>
+            <li class="ico shicai"></li>
+            <li class="ico kefu"></li>
+        </ul>
+        <div class="tac footinfo pt10">
+            <p>
+                <a href="/p/bzzs">包装展示</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="/p/dgsm">订购说明</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="/p/rhsh">如何收货</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="/p/fkfs">付款方式</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="/p/psfw">配送范围</a>
+            </p>
+            <p>Copyright  2012吉米的厨房 All RightRevesed. </p>
+        </div>
+    </div>
+
+</body>
+
+</html>

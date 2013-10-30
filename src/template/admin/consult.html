@@ -1,0 +1,38 @@
+{% extends "layout/admin.html" %}
+
+{% block title %}咨询管理{% endblock %}
+
+{% block content %}
+
+<hr>
+<h1>咨询管理</h1>
+{%set messages=handler.get_flashed_messages() %}
+{%if messages%}
+    <div class="msg">
+        {% for type, msg in messages%}
+            <span>{{msg}}</span>
+        {% endfor %}
+    </div>
+{%endif%}
+
+{% if total > 0 -%}
+<div class="row">
+	{% for consult in consults -%}
+  <p>
+  {{consult.mobile}} ({{consult.posted|datetimeformat}}) 咨询：<a href="/shop/{{consult.shop.ename}}" target="_blank">{{consult.shop.name}}</a><br>
+  咨询问题：{{consult.content}}<br>
+  {%if consult.replyed == 0 -%}<form action="/admin/replyconsult/{{consult.id}}" method="post">
+  {{xsrf()}}
+    <input type="text" size="40" class="input" name="reply" maxlength="100"> <input type="submit" name="sub" class="sub" value="回复咨询">
+  </form>
+  {%-else-%}<p style="text-indent:2em">已回复：{{consult.reply}} ({{consult.replyed|datetimeformat}})</p>{%-endif%}
+  </p>
+  <hr class="mt5 mb5"/>
+  
+  {%- endfor %}
+</div>
+{{ module.Paginate(total, pagesize, page) }}
+{%- else -%}
+<p>暂无咨询</p>
+{%- endif %}
+{% endblock %}

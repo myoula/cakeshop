@@ -1,0 +1,44 @@
+{% extends "layout/admin.html" %}
+
+{% block title %}添加商品{% endblock %}
+
+{% block content %}
+<div class="mb10 fl"><a class="but" href="/admin/shops" >返回商品管理</a></div>
+<hr>
+<h1>请先选择分类</h1>
+<form action="" method="post">
+{{xsrf()}}
+        <div class="form-group">
+        <label>请先选择分类</label>
+        <select class="form-control" name="cid" id="cid">
+        <option value=0>请选择分类</option>
+		{% for category in categorys -%}
+
+        <option value={{category.id}}>{{category.name}}</option>
+
+        {%- endfor %}
+		</select>
+        </div>
+</form>
+
+{% endblock %}
+
+{% block foot %}
+
+<script>
+
+    $('#cid').change(function(){
+
+        if (this.value > 0)
+
+        {
+
+            window.location = '/admin/addshop/' + this.value;
+
+        }
+
+    })
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,10 @@
+.tit_cake{background-position: 0px -105px;}
+.cake_list{width: 975px;
+  li{width: 308px; height: 278px; margin:0px 15px 15px 0px; float: left; border: 1px solid #dddddd;text-align:center; padding-top: 30px; position: relative;
+    .cakedesc{position: absolute; bottom: 0px; left: 0px; width: 308px; height: 100px; background: #715830;opacity: 0.8;    filter:alpha(opacity=80);  -moz-opacity:0.8; display: none;
+    p{ color: #ffffff;}
+    a{ color: #ffffff;}
+    }
+  }
+  li:hover .cakedesc{display: block;}
+}

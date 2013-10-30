@@ -1,0 +1,223 @@
+{% extends "layout/admin.html" %}
+
+{% block title %}添加商品{% endblock %}
+
+{% block content %}
+<div class="mb10 fl"><a class="but" href="/admin/shops">返回商品管理</a></div>
+<hr>
+<h1>添加{{category.name}}商品</h1>
+{%set messages=handler.get_flashed_messages() %}
+{%if messages%}
+    <div class="msg">
+        {% for type, msg in messages%}
+            <span>{{msg}}</span>
+        {% endfor %}
+    </div>
+{%endif%}
+
+
+<form action="" method="post">
+{{xsrf()}}
+		<input type="hidden" name="cover" id="cover" value="">
+    	<input type="hidden" name="pics" id="pics" value="">
+        <div class="form-group">
+        <label>分类</label>
+        {{category.name}} <a href="/admin/addshop">重新选择分类</a>
+        </div>
+        <div class="form-group">
+            <label>品  名</label>
+            <input type="text" class="input"  name="name" maxlength=80 placeholder="最多80位">
+        </div>
+        <div class="form-group">
+            <label>英文名</label>
+            <input type="text" class="input"  name="ename" maxlength=100  placeholder="字母和数字，最多100位" >
+        </div>
+        <div class="form-group">
+            <label>配图</label>
+            <a href="" id="fileupload" style="display:inline;">选择图片</a>
+        </div>
+        <div id="prev"></div>
+
+        {% if category.id == 2 -%}
+        <div class="form-group">
+            <label>价  格</label>
+            <input type="text" class="input"  name="price" maxlength="10" size="10" value="0.0">
+        </div>
+        <div class="form-group">
+            <label>简介</label>
+            <textarea name="resume" class="input" cols=40 rows=3></textarea>
+        </div>
+        {%-else-%}
+        {% if categoryattrs.count() > 0 -%}
+
+		{% for categoryattr in categoryattrs -%}
+			<div class="form-group">
+            	<label>{{ categoryattr.name }}</label>
+                <input type="text"  class="input" name="attr_{{categoryattr.id}}" maxlengt=255 size=60 value="{{categoryattr.dec}}">
+			</div>
+        {%- endfor %}
+
+		{%- endif %}
+        <div class="form-group">
+        	<label>级别</label>
+            <select class="form-control" name="level">
+				<option value=1>1</option>
+        		<option value=2>2</option>
+        		<option value=3 selected>3</option>
+        		<option value=4>4</option>
+        		<option value=5>5</option>
+            </select>
+        </div>
+		<div class="form-group">
+        	<label>简介</label>
+        	<textarea name="resume" class="form-control" cols=40 rows=3></textarea>
+        </div>
+        <div class="form-group">
+        	<label>详细介绍</label>
+        	<textarea name="intro" class="form-control"  id="intro" cols=60 rows=10></textarea>
+        </div>
+        <div class="form-group">
+        	<label>友情提示</label>
+        	<textarea name="prompt" class="form-control" id="prompt" cols=40 rows=8></textarea>
+        </div>
+        {%-endif%}
+        <div class="form-group">
+            <label>点击量</label>
+            <input type="text" class="input"  name="views" maxlength="10" size="10" value="0">
+        </div>
+        <div class="form-group">
+        <input type="submit" name="sub" value="提交" class="sub">
+ 		</div>
+</form>
+
+{% endblock %}
+
+{% block foot %}
+
+<script src="/style/xheditor/xheditor-1.2.1.min.js"></script>
+
+<script src="/style/xheditor/xheditor_lang/zh-cn.js"></script>
+
+<script src="/style/js/jquery.ocupload.js?v=1"></script>
+
+
+
+<script>
+
+    $('#intro').xheditor({tools:'mini', html5Upload:false, upImgUrl:"/ajax/upload",upImgExt:"jpg,gif,png"});
+
+    $('#prompt').xheditor({tools:'mini', html5Upload:false, upImgUrl:"/ajax/upload",upImgExt:"jpg,gif,png"});
+
+
+
+    function resetpics() {
+
+        var pics = [];
+
+        $('#prev p img').each(function(){
+
+            pics.push($(this).attr('src'));
+
+        });
+
+
+
+        $('#pics').val(pics.join(','));
+
+    }
+
+
+
+    $('#prev p a.del').live('click', function(){
+
+        if ($(this).next('a').hasClass('on')) {
+
+            $('#cover').val('');
+
+        }
+
+
+
+        $(this).parent().remove();
+
+
+
+        resetpics();
+
+        return false;
+
+    });
+
+
+
+    $('#prev p a.cover').live('click', function(){
+
+        if (!$(this).hasClass('on')) {
+
+            $('#prev p a.on').text('设为封面').removeClass('on');
+
+            $(this).text('取消封面').addClass('on');
+
+            $('#cover').val($(this).attr('data'));
+
+        } else {
+
+            $(this).text('设为封面').removeClass('on');
+
+            $('#cover').val('');
+
+        }
+
+        
+
+        return false;
+
+    });
+
+
+
+    var myUpload = $('#fileupload').upload({
+
+                name: 'filedata',
+
+                action: '/ajax/upload',
+
+                enctype: 'multipart/form-data',
+
+                autoSubmit: true,
+
+                onClick: function(){
+
+                    
+
+                },
+
+                onSelect: function(){
+
+                    var ext = myUpload.filename().substr(myUpload.filename().length - 3, 3).toLowerCase();
+
+                    if (ext != 'jpg' || ext != 'gif' || ext != 'png')
+
+                    {
+
+                        return false;
+
+                    }
+
+                },
+
+                onComplete: function(response){
+
+                    eval('var data = ' + response);
+
+                    $('#prev').append('<p><img src="' + data.msg +'" width=75><br><a href="" class="del">删除</a> <a href="" class="cover" data="' + data.msg + '">设为封面</a></p>');
+
+                    resetpics();
+
+                }
+
+            });
+
+</script>
+
+{% endblock %}

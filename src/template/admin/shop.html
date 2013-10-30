@@ -1,0 +1,50 @@
+{% extends "layout/admin.html" %}
+
+{% block title %}商品管理{% endblock %}
+
+{% block content %}
+<div class="mb10 fl"><a class="but" href="/admin/addshop">添加商品</a></div>
+<div class="fr mr30">
+    <a href="/admin/shops">全部</a>&nbsp;|&nbsp;<a href="/admin/shops?status=9">已下架</a>&nbsp;|&nbsp;{% for category in categorys -%}<a href="/admin/shops?cid={{category.id}}">{{category.name}}</a>&nbsp;|&nbsp;{% endfor %}
+</div>
+<hr/>
+<h1>商品管理</h1>
+{%set messages=handler.get_flashed_messages() %}
+{%if messages%}
+    <div class="msg">
+        {% for type, msg in messages%}
+            <span>{{msg}}</span>
+        {% endfor %}
+    </div>
+{%endif%}
+
+{% if total > 0 -%}
+<ul class="shoplist">
+	{% for shop in shops -%}
+	<li>
+    	<img src="/upload/{{ shop.cover }}" >
+        <div class="info">
+        	<p class="fs16 fw">{{ shop.name }} 编号：S{{shop.id}}</p>
+            <p>英文名：{{ shop.ename }}</p>
+            <p>
+        	<a href="/admin/editshop/{{ shop.id }}" class="but" role="button">修改</a>
+            <a href="/admin/delshop/{{ shop.id }}" class="but" role="button">{% if shop.status == 9%}上架{%else%}下架{%endif%}</a>
+          	{%if shop.cid == 2-%}
+          		价格：{{shop.price}}
+          	{%-else-%}
+            	<a href="/admin/shopattrs/{{ shop.id }}" class="but" role="button">价格</a>
+            	<a href="/admin/recommshop/{{ shop.id }}" {% if shop.status == 1-%}class="but"{%else%}class="sub"{%-endif%} role="button">{% if shop.status == 1-%}取消{%-endif%}推荐</a>
+          	{%-endif%}
+            
+        </p>
+        </div>
+        <div class="blank5"></div>
+    </li>
+    {%- endfor %}
+</ul>
+{{ module.Paginate(total, pagesize, page) }}
+{%- else -%}
+<p>暂无商品</p>
+{%- endif %}
+
+{% endblock %}

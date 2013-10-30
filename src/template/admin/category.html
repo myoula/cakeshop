@@ -1,0 +1,49 @@
+{% extends "layout/admin.html" %}
+
+{% block title %}分类管理{% endblock %}
+
+{% block content %}
+<div class="mb10 fl"><a class="but" href="/admin/addcategory" >添加分类</a></div>
+<hr>
+<h1>分类管理</h1>
+{%set messages=handler.get_flashed_messages() %}
+{%if messages%}
+    <div class="msg">
+        {% for type, msg in messages%}
+            <span>{{msg}}</span>
+        {% endfor %}
+    </div>
+{%endif%}
+
+{% if categorys -%}
+  <table class="table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>分类名</th>
+              <th>访问目录</th>
+              <th>排序</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for category in categorys -%}
+            <tr>
+              <td>{{category.id}}</td>
+              <td>{{category.name}}</td>
+              <td>{{category.slug}}</td>
+              <td>{{category.order}}</td>
+              <td>{% if category.id > 2-%}<a href="/admin/categoryattrs/{{category.id}}">设置参数</a> / <a href="/admin/editcategory/{{category.id}} ">修改</a> / <a href="/admin/delcategory/{{category.id}} ">删除</a>{%-endif%}</td>
+            </tr>
+		{%- endfor %}
+          </tbody>
+        </table>
+        {{pagehtml}}
+{%- else -%}
+
+<p>暂无分类</p>
+
+{%- endif %}
+
+
+{% endblock %}

@@ -1,0 +1,25 @@
+<div class="pages">
+{%- if pages > 1 -%}
+<a href="{{url}}1">&lt;&lt;</a>
+<a href="{{url}}{{prepage}}">&lt;</a>
+{%- set start = 1 -%}
+{%- set end = pages + 1 -%}
+{%- if pages <= 10 -%}
+{%- elif pages - page <= 7 -%}
+{%- set start = pages - 10 %}
+{%- else -%}
+        {%- if page <= 7 -%}
+        {%- set start = 1 -%}
+        {%- set end = 11 -%}
+        {%- else -%}
+        {%- set start = page - 6 -%}
+        {%- set end = page + 4 -%}
+        {%- endif -%}
+{%- endif -%}
+{%- for i in range(start, end) -%}
+<a href="{{url}}{{i}}"{% if i == page -%} class="current"{%- endif%}>{{i}}</a>
+{%- endfor -%}
+<a href="{{url}}{{nextpage}}">&gt;</a>
+<a href="{{url}}{{pages}}">&gt;&gt;</a>
+{%- endif -%}
+</div>

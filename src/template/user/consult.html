@@ -1,0 +1,36 @@
+{% extends "layout/user.html" %}
+{% block css %}member{% endblock %}
+{% block content %}
+
+<div class="mypostion">我的咨询</div>
+<div class="clearfix">
+	{% if total > 0%}
+	<table width="100%" class="m_table list" rules=rows >
+		{% for consult in consults -%}
+		<tr>
+			<td width="2%"></td>
+			<td width="19%">
+				<p style="line-height:10px;">&nbsp;</p>
+				<a href="/shop/{{consult.shop.ename}}" target="_blank"><img src="/upload/{{consult.shop.cover}}" /></a>
+				<p>
+					<a class="fs14">{{consult.shop.name}}</a>
+				</p>
+				<p style="line-height:10px;">&nbsp;</p>
+			</td>
+			<td width="60%">
+				<p class="ico ask">问：{{ consult.content }} ({{ consult.posted|datetimeformat }})</p>
+				{% if consult.replyed > 0-%}<p class="ico ans">答：{{ consult.reply }} {{ consult.replyed|datetimeformat }}</p>{%-endif %}
+			</td>
+			<td width="19%">
+				<p class="ask">2013-08-04 11:49:09</p>
+				<p class="ans">2013-08-04 11:51:24</p>
+			</td>
+		</tr>
+		{%- endfor %}
+	</table>
+	{{ module.Paginate(total, pagesize, page) }}
+	{% else %}
+		<p>您还没有咨询过</p>
+	{% endif %}
+</div>
+{% endblock %}

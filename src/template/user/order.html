@@ -1,0 +1,94 @@
+{% extends "layout/user.html" %}
+{% block css %}member{% endblock %}
+{% block content %}
+<div class="mypostion">我的订单</div>
+	<div class="m_tab">
+		<ul class="clearfix">
+			<li {%if status is none %}class="on"{% endif %}><a href="/user/orders">全部</a></li>
+			<li {%if status == '2' %}class="on"{% endif %}><a href="/user/orders?status=2">已发货</a></li>
+			<li {%if status == '4' %}class="on"{% endif %}><a href="/user/orders?status=4">已取消</a></li>
+			<li {%if status == '0' %}class="on"{% endif %}><a href="/user/orders?status=0">待付款</a></li>
+			<li {%if status == '1' %}class="on"{% endif %}><a href="/user/orders?status=1">正在处理</a></li>
+			<li {%if status == '3' %}class="on"{% endif %}><a href="/user/orders?status=3">订单完成</a></li>
+		</ul>
+	</div>
+
+{% if total > 0%}
+
+{% set status = ['等待付款', '正在处理', '已发货', '订单完成', '已取消']%}
+<div class="clearfix">
+ {% for order in orders%}
+                <table width="100%" border="1" rules=rows class="m_table mt10">
+                	<tr class="bgf2">
+                    	<td colspan=3 height="30px">
+                        	<div class="fl ml10">订单号：U{{user.id}}-S{{order.id}}</div> <div class="fr mr10">{{status[order.status]}} {%if order.status == 0-%}<a href="/settle">去付款</a>{%-endif%}</div></tr>
+                    <tr>
+                    <tr class="bgdd">
+                        <td width="88%">
+                            <table width="100%" class="fs12">
+                                <tr>
+                                    <td width="2%" height="30px;"></td>
+                                    <td width="71%" height="30px" align="center">商品信息</td>
+                                    <td width="11%" align="center">价格</td>
+                                    <td width="11%" align="center">积分</td>
+                                    <td width="5%" align="center">数量</td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td width="2%">&nbsp;</td>
+                        <td width="10%" align="center" class="borcc">状态</td>
+                    </tr>
+                        <td width="78%">
+                            <table width="100%" class="fs12">
+                            {% for orderitem in order.orderitems%}
+                                <tr>
+                                    <td width="2%" height="90px;"></td>
+                                    <td width="71%">
+                                    <a class="fl" href="/shop/{{orderitem.shop.ename}}"><img src="/upload/{{orderitem.shop.cover}}"></a>
+                                        <p class="fl ml10">
+                                            <a class="fs14" href="/shop/{{orderitem.shop.ename}}">{{orderitem.shop.name}}</a><br/>
+                                            {%if orderitem.shopattr -%}规格：{{orderitem.shopattr.name}}{%-endif%} 免费配送10套餐具
+                                        </p>
+                                    </td>
+                                    {%if orderitem.shopattr%}
+                                    {%set price = orderitem.shopattr.price%}
+                                    {%else%}
+                                    {%set price = orderitem.shop.price%}
+                                    {%endif%}
+
+                                    <td width="11%" class="oc" align="center">
+                                        {% if orderitem.shop.cid != 1 %}￥{{price}} {% else %} 0 {% endif%}
+                                    </td>
+                                    <td width="11%"class="oc" align="center">
+                                        {% if orderitem.shop.cid == 1 %}{{price}} {% else %} 0 {% endif%}
+                                    </td>
+                                    <td width="5%" align="center">
+                                        {{orderitem.num}}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </table>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td align="center"  class="borcc">
+                            {{status[order.status]}}
+                            
+                        </td>
+                    </tr>
+                </table>
+                {% endfor %}
+                
+            </div>
+
+
+
+
+{{ module.Paginate(total, pagesize, page) }}
+
+{% else %}
+
+<p>还没有订单</p>
+
+{% endif %}
+
+{% endblock %}

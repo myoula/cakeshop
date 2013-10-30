@@ -1,0 +1,3 @@
+{% extends "layout/user.html" %}{% block css %}member{% endblock %}
+{% block content %}<div class="welcome">欢迎您: {{user.mobile}} ，欢迎光临吉米的厨房！</div><div class="mypostion">会员中心首页</div><ul class="m_index clearfix">	<li>您上次登陆时间为：{{user.lsignined|datetimeformat}}</li>	<li>您的订单：<a>{{user.order}}</a>&nbsp;个 &nbsp;&nbsp;&nbsp;&nbsp;<a href="/user/orders">立即查看</a></li>	<li>您的咨询：<a>{{user.consult}}</a>&nbsp;个 &nbsp;&nbsp;&nbsp;&nbsp;<a href="/user/consults">立即查看</a></li>	<li>您的积分：<a>{{user.credit}}</a>&nbsp;个 &nbsp;&nbsp;&nbsp;&nbsp;<a href="/user/credits">立即查看</a></li></ul>
+{% endblock %}

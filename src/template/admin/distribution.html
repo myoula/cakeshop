@@ -1,0 +1,49 @@
+{% extends "layout/admin.html" %}
+
+{% block title %}配送方式{% endblock %}
+
+{% block content %}
+<div class="mb10 fl"><a class="but" href="/admin/adddistribution">添加配送方式</a></div>
+<hr>
+<h1>配送方式</h1>
+{%set messages=handler.get_flashed_messages() %}
+{%if messages%}
+    <div class="msg">
+        {% for type, msg in messages%}
+            <span>{{msg}}</span>
+        {% endfor %}
+    </div>
+{%endif%}
+
+
+
+{% if distributions -%}
+<ul>
+{% for distribution in distributions -%}
+	<li>
+    	<p rel="{{distribution.id}}"> {{distribution.name}} <small style="color:#999">费用：{{distribution.price}}</small> <a href="/admin/editdistribution/{{distribution.id}} ">修改</a> {% if not distribution.list %}<a href="/admin/deldistribution/{{distribution.id}} ">删除</a>{%endif%}
+        <br/>
+        	<small style="color:#999;content: '\2014 \00A0';">简介：{{distribution.content}}</small>
+        </p>
+		{% if distribution.list %}
+        	{% for cdistribution in distribution.list %}
+        	<p style="padding-left:20px; margin-top:10px;" el="{{cdistribution.id}}">
+        		{{cdistribution.name}}
+                <small style="color:#999">费用：{{cdistribution.price}}</small>
+                <a href="/admin/editdistribution/{{cdistribution.id}} ">修改</a> {% if not cdistribution.list %}<a href="/admin/deldistribution/{{cdistribution.id}} ">删除</a>{%endif%}
+                <br>
+         		<small style="color:#999;content: '\2014 \00A0';">简介：{{cdistribution.content}}</small>
+        	</p>
+			{% endfor %}
+		{%- endif %}
+		<hr/>
+        </li>
+	{%- endfor %}
+</ul>
+{%- else -%}
+
+<p>暂无配送方式</p>
+
+{%- endif %}
+
+{% endblock %}

@@ -1,0 +1,124 @@
+.wapper {
+  width: 100%;
+  margin: 0px auto; }
+
+a {
+  color: #2a6496; }
+
+a:hover {
+  color: #269abc; }
+
+.bg {
+  background: url("adminbg.jpg") repeat-y; }
+
+.headbg {
+  background: #8B7941;
+  border-bottom: 3px solid #705829; }
+
+.adminhead {
+  background: url("admin_head.jpg") no-repeat;
+  height: 77px;
+  width: 1200px; }
+
+.left {
+  width: 150px;
+  float: left; }
+  .left li {
+    margin-left: 10px;
+    padding-left: 20px;
+    line-height: 40px;
+    height: 40px; }
+    .left li a {
+      color: #86724E;
+      font-size: 14px; }
+  .left .on {
+    background: #ffffff; }
+.pages{
+	line-height: 30px;
+	height: 30px;
+	margin-top: 30px;}
+	.pages a{
+		padding:8px 10px;
+		margin:0px 4px;
+		border: 1px solid #cccccc;
+	}
+	.pages a:hover{
+		background:#dddddd;
+		border: 1px solid #cccccc;
+	}
+.right {
+  display: inline-block;
+  width: 1000px;
+  float: left;
+  margin-left: 20px;
+  padding-top: 20px; }
+  .right .but {
+    border: 1px solid #cccccc;
+    color: #86734A;
+    line-height: 24px;
+    padding: 0px 10px;
+    display: inline-block;
+    cursor: pointer; }
+  .right .sub {
+    background: #705829;
+    line-height: 20px;
+    padding: 5px 20px;
+    color: #ffffff;
+    border: 0px; }
+  .right a.but:hover {
+    text-decoration: none; }
+  .right h1 {
+    font-size: 20px;
+    margin: 20px; }
+  .right hr {
+    clear: both; }
+  .right .input {
+    line-height: 16px;
+    padding: 4px;
+    border: 1px solid #cccccc;
+    width: 200px; }
+  .right .table {
+    width: 100%; }
+    .right .table tr {
+      line-height: 25px; }
+      .right .table tr th {
+        border-bottom: 1px solid #cccccc;
+        font-size: 16px;
+        text-align: left;
+        padding-left: 10px;
+        margin-bottom: 10px; }
+      .right .table tr td {
+        padding-left: 10px; }
+    .right .table tr:hover {
+      background: #dddddd; }
+  .right .msg {
+    color: #ff0000;
+    text-align: center; }
+    .right .msg span {
+      line-height: 40px;
+      font-size: 14px; }
+  .right .form-group {
+    margin-bottom: 20px; }
+    .right .form-group label {
+      width: 100px;
+      display: inline-block;
+      padding-left: 10px; }
+  .right .shoplist {
+    width: 100%; }
+    .right .shoplist li {
+      border-bottom: 1px dotted #cccccc;
+      width: 100%;
+      margin-top: 10px; }
+      .right .shoplist li img {
+        width: 120px;
+        height: 120px;
+        border: 1px solid #cccccc;
+        padding: 2px;
+        float: left; }
+      .right .shoplist li .info {
+        float: left;
+        margin-left: 20px; }
+        .right .shoplist li .info p {
+          line-height: 40px; }
+    .right .shoplist li:hover {
+      background: #dddddd; }

@@ -1,0 +1,38 @@
+{% extends "layout/admin.html" %}
+
+{% block title %}添加地区{% endblock %}
+
+{% block content %}
+<div class="mb10 fl"><a class="but" href="/admin/areas" >返回地区管理</a></div>
+<hr>
+<h1>添加地区</h1>
+{%set messages=handler.get_flashed_messages() %}
+{%if messages%}
+    <div class="msg">
+        {% for type, msg in messages%}
+            <span>{{msg}}</span>
+        {% endfor %}
+    </div>
+{%endif%}
+<form action="" method="post">
+{{xsrf()}}
+        <div class="form-group">
+        <label>地区名</label>
+        <input type="text" class="input"  name="name" maxlength="30" placeholder="">
+        </div>
+        <div class="form-group">
+        <label>上级地区</label>
+        <select class="form-control" name="pid" id="pid">
+        <option value=0>一级</option>
+        {% for area in areas -%}
+        <option value={{area.id}}>{{area.name}}</option>
+        {%- endfor %}
+        </select>
+        </div>
+        <div class="form-group">
+        <input type="submit" name="sub" value="提交" class="sub">
+        </div>
+</form>
+
+
+{% endblock %}

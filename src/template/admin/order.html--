@@ -1,0 +1,85 @@
+{% extends "layout/admin.html" %}
+
+{% block title %}订单管理{% endblock %}
+
+{% block content %}
+<div class="fr mr30 mb10">
+    <a href="/admin/orders">全部</a>&nbsp;|&nbsp;<a href="/admin/orders?status=2">已发货</a>&nbsp;|&nbsp;<a href="/admin/orders?status=4">已取消</a>&nbsp;|&nbsp;<a href="/admin/orders?status=0">待付款</a>&nbsp;|&nbsp;<a href="/admin/orders?status=1">正在处理</a>&nbsp;|&nbsp;<a href="/admin/orders?status=3">订单完成</a>
+</div>
+<hr/> 
+<h1>订单管理</h1>
+{%set messages=handler.get_flashed_messages() %}
+{%if messages%}
+    <div class="msg">
+        {% for type, msg in messages%}
+            <span>{{msg}}</span>
+        {% endfor %}
+    </div>
+{%endif%}
+
+{% if total > 0%}
+
+{% set status = ['等待付款', '正在处理', '已发货', '订单完成', '已取消']%}
+	<!-- Table -->
+  <table class="table">
+          <thead>
+            <tr>
+              <th>用户</th>
+              <th>订单号</th>
+              <th>当前状态</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for order in orders%}
+            <tr style="background-color: #d9edf7;">
+              <td>{{order.mobile}}</td>
+              <td>U{{order.uid}}-S{{order.id}}</td>
+              <td>{{status[order.status]}} </td>
+              <td><a href="/admin/changeorder/{{order.id}}">改变状态</a></td>
+            </tr>
+            <tr>
+            	<td colspan=4 >
+                	<ul class="row">
+                    {% for orderitem in order.orderitems%}
+                        <li style="width:70px; float:left;border: 1px solid #cccccc;padding: 5px;margin: 6px;">
+                            <img src="/upload/{{orderitem.shop.cover}}" width="70px" height="70px">
+                            <div>
+                              {%if orderitem.shopattr%}
+                                {%set price = orderitem.shopattr.price%}
+                              {%else%}
+                                {%set price = orderitem.shop.price%}
+                              {%endif%}
+                              <p>{{orderitem.shop.name}}</p>
+                              <p>单价：{{price}}</p>
+                              <p>数量： {{orderitem.num}}</p>
+                              <p>总额： {{price * orderitem.num}}</p>
+                            </div>
+                        </li>
+                     {% endfor %}
+                   	</ul>
+                    <div class="blank5"></div>
+                    <div>
+                    <p>配送：{{order.distr.name|null}} 时间：{{order.distribbed}}<br>
+                送货地址：{{order.ua.city|null}} {{order.ua.region|null}} {{order.ua.address|null}} {{order.ua.name|null}} {{order.ua.tel|null}} {{order.ua.mobile|null}}<br>
+                付款：{% if order.payment == 0-%}货到付款{%-else-%}在线支付{%-endif%}<br>
+                留言：{{order.message}}<br>
+                发票：{%if order.isinvoice%}<font color=red>开发票</font>{%endif%} 抬头：{%if order.invoicesub == 0-%}个人{%-else-%}公司{%-endif%} {{order.invoicename}} 类型：{%if order.invoicecontent == 0-%}蛋糕{%-else-%}食品{%-endif%}</p>
+                	</div>
+                </td>
+            </tr>
+			{%- endfor %}
+            
+          </tbody>
+          {{ module.Paginate(total, pagesize, page) }}
+        </table>
+        {{pagehtml}}
+
+
+{% else %}
+
+<p>还没有订单</p>
+
+{% endif %}
+
+{% endblock %}

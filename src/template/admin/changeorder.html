@@ -1,0 +1,33 @@
+{% extends "layout/admin.html" %}
+
+{% block title %}修改订单状态{% endblock %}
+
+{% block content %}
+<div class="fr mr30 mb10">
+    <a href="/admin/orders">全部</a>&nbsp;|&nbsp;<a href="/admin/orders?status=2">已发货</a>&nbsp;|&nbsp;<a href="/admin/orders?status=4">已取消</a>&nbsp;|&nbsp;<a href="/admin/orders?status=0">待付款</a>&nbsp;|&nbsp;<a href="/admin/orders?status=1">正在处理</a>&nbsp;|&nbsp;<a href="/admin/orders?status=3">订单完成</a>
+</div>
+<hr/>
+<h1>修改订单状态</h1>
+{% set status = ['等待付款', '正在处理', '已发货', '订单完成', '已取消']%}
+
+<form action="" method="post">
+    {{xsrf()}}
+    <div class="form-group">
+    <label>请选择订单状态：</label><select name="status">
+
+        <option>请选择状态</option>
+
+        {% for statu in status -%}
+
+        <option value={{status.index(statu)}} {%if order.status == status.index(statu)-%}selected{%-endif%}>{{statu}}</option>
+
+        {%- endfor %}
+
+    </select>
+</div>
+<div class="form-group">
+    <input type="submit" name="sub" class="sub" value="提交">
+</div>
+</form>
+
+{% endblock %}

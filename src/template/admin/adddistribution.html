@@ -1,0 +1,51 @@
+{% extends "layout/admin.html" %}
+
+{% block title %}添加配送方式{% endblock %}
+
+{% block content %}
+<div class="mb10 fl"><a class="but" href="/admin/distributions" >返回配送方式管理</a></div>
+<hr>
+<h1>添加配送方式</h1>
+{%set messages=handler.get_flashed_messages() %}
+{%if messages%}
+    <div class="msg">
+        {% for type, msg in messages%}
+            <span>{{msg}}</span>
+        {% endfor %}
+    </div>
+{%endif%}
+
+<form action="" method="post">
+    {{xsrf()}}
+	<div class="form-group">
+		<label>分类</label>
+    <select name="pdid">
+
+            <option value="0">无分类</option>
+
+            {% for distribution in distributions%}
+
+            <option value="{{distribution.id}}">{{distribution.name}}</option>
+
+            {% endfor %}
+
+            </select>
+</div>
+        <div class="form-group">
+        <label>方式</label>
+    <input type="text" name="name" class="input" maxlength=20 size=10> 最多10字<br>
+</div>
+        <div class="form-group">
+        <label>费用</label>
+    		<input type="text" name="price" class="input" maxlength=4 size=4 value="0"> 0为免费<br>
+</div>
+        <div class="form-group">
+        <label>介绍</label>
+    <input type="text" name="content" class="input" maxlength=100 size=80><br>
+</div>
+        <div class="form-group">
+    <input type="submit" name="sub" value="提交" class="sub">
+</div>
+</form>
+
+{% endblock %}

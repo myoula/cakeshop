@@ -1,0 +1,56 @@
+.leftwapper,.rightwapper{
+ padding-bottom: 32767px !important;
+ margin-bottom: -32767px !important;
+}
+.leftwapper{ width:158px;border:1px solid #e6e6e6;
+  dl{
+    dt{ height:36px; line-height: 36px; color:#705828; background: url("left_dt_bg.gif") repeat-x;font-family:'Microsoft YaHei','YaHei','SimHei','Hei'; font-size: 20px; text-align: center;border-bottom:1px solid #e6e6e6;}
+    dd{ display:block;height: 30px; line-height: 30px; background: url("left_dd_bg.gif") repeat-x; padding-left: 15px; font-size: 16px;border-bottom:1px solid #e6e6e6;
+      a{display: block; cursor: pointer;}
+    }
+  }
+}
+.rightwapper{width:770px; height: auto; padding-left: 30px;
+  .bt{border-top:1px dotted #cccccc }
+  .welcome{line-height:30px; height: 30px;color:#705826; padding-bottom: 10px;}
+  .mypostion{border-bottom: 3px solid #705829;line-height:30px; font-weight: bold; font-size: 14px;}
+  .m_index{margin-top:30px; width: 550px;
+    li{line-height: 30px; height: 30px; border-bottom: 1px dotted #cccccc; font-size: 14px; color: #705827;}
+  }
+  .m_form{margin-top:30px;
+    .item{width: 700px; float: left; height: 35px;
+      span{width: 100px; text-align: right; float: left; display: block; margin-right: 30px; line-height: 30px;}
+      i{ float: left; display: block; margin-right: 30px; line-height: 30px; font-style: normal; font-size: 14px; color: #666666;}
+      input{line-height: 20px;margin-top: 2px; width: 150px; border: 1px solid #dddddd; padding: 2px 4px;}
+      label{line-height: 30px;
+        .radio{vertical-align: middle;margin: -4px 2px 0px 0px; margin-right: 4px; width:15px; border: 0px;}
+      }
+      .selectdiv{background:url("droparrow.gif")  right center no-repeat; padding:0px 18px 0px  10px; line-height: 28px; height: 28px; border: 1px solid #dddddd;cursor: pointer;}
+      #sel_relation{width:66px; height:0px;max-height:100px;overflow:hidden;overflow-y:auto; position: absolute;top:25px; left: -1px;background: #ffffff; border: 1px solid #dddddd; border-bottom: 0px; border-top:0px;}
+      #sel_relation.on{ height: auto !important; border-bottom: 1px solid #dddddd;border-top: 1px solid #dddddd;padding:6px 0px 6px 10px;}
+      .sub_but{ background-position: 0px -120px; width: 130px; height: 35px; line-height: 35px; text-align: center; border: 0px; margin: 0px;padding: 0px; font-size: 16px; font-weight: bold; color: #ffffff;}
+      .biginput{width: 300px;}
+    }
+    .time{
+      input{margin-right: 4px;}
+      .y{width: 50px;}
+      .m{width: 30px;}
+      .d{width: 30px;}
+    }
+  }
+  .list{border: 1px dotted #cccccc !important; }
+  .m_table{border: 1px solid #cccccc;font-size: 12px;
+    .bgf2{background: #F2F2F2;}
+    .bgdd{background: #dddddd;}
+    img{border: 1px solid #ccc; padding: 1px; width: 96px; height: 70px;}
+    .ask{ background-position:0px -33px; padding-left: 20px; }
+    .ans{ background-position:0px -55px; padding-left: 20px; }
+  }
+  .m_tab{ margin-top:10px; border-bottom: 1px solid #705829; height: 30px;
+    li{ border: 1px solid #cccccc; border-bottom: 0px; padding: 0px 10px; float: left; background: #F2F2F2; height: 29px; line-height: 29px; margin-right: 10px;}
+    .on{ border: 1px solid #705829; border-bottom: 0px;  background: #ffffff; height: 30px; line-height: 30px;
+      a{padding: 0px 10px;}
+    }
+  }
+}
+.leftbottomline{border-bottom:1px solid #e6e6e6; font-size: 0px; line-height: 1px;overflow:hidden; width: 160px; float: left;}

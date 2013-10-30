@@ -1,0 +1,63 @@
+#cakeimages{ width: 578px; height: 578px; border: 1px solid #E8E8E8; float: left; text-align: center; position: relative;
+  #imgplayer{position: absolute; bottom: 0px; left: 0px; height: 105px;text-align: center; width:568px; padding-left: 10px;
+    a{margin:6px; float: left; cursor: pointer; text-align: center;padding-top: 7px;
+      img{ display: inline; width: 96px; height: 76px; padding: 0px 2px;}
+    }
+    a.on{background: url("imgbg.gif") no-repeat; width: 100px; height:80px;}
+    a:hover{text-decoration:none;}
+  }
+}
+.pl20{padding-left: 20px;}
+.cakeinfo{width: 360px;margin-left: 20px; float: left;}
+.borbomdd{border-bottom: 1px solid #dddddd;}
+.bgffffbf{background: #FFFFBF;}
+.item{width: 100%;
+  span{width:50px; height:20px; line-height:20px; float:left; display: block;padding: 10px; text-align: center;}
+  div{ width: 290px; padding: 5px 0px; float: left;
+    .cakenumbox{width: 100px; height: 30px; display: block;
+      input{ width: 48px; line-height:24px;padding: 2px 6px; border: 1px solid #dddddd; margin: 0px; float: left; text-align: center;}
+      .increase{background-position: -7px -277px; width: 24px; height: 10px; float: left; border: 1px solid #DDDDDD; cursor: pointer;margin: 0px 0px 0px 4px;}
+      .decrease{background-position: -7px -287px; width: 24px; height: 10px; float: left; border: 1px solid #DDDDDD; cursor: pointer; margin: 6px 0px 0px 4px;}
+    }
+  }
+  #size_sel{
+    a{border: 1px solid #dddddd; line-height: 30px; float: left; display: block; margin:5px 10px; cursor: pointer; background: #ffffff; width: 120px; text-align: center;}
+    a.on{border: 1px solid #FF7F00; color: #FF7F00; font-weight: bold;}
+  }
+  .sweet_sel{padding-top:16px;
+    em{background: url("sweetbg.jpg") 0px 0px;width: 68px;height: 11px;display: block;
+      i{background: url("sweetbg.jpg") 0px -13px;height: 11px;display: block;}
+    }
+  }
+}
+.leftwapper{width: 669px;border-right:1px solid #dddddd; float: left;
+  .borbom99{border-bottom: 3px solid #990000;}
+  .tanc{color: #6D581F;}
+  .tab{line-height: 40px; height:40px;
+    a{line-height: 40px; float: left; padding:0px 20px; font-size: 14px; color:#535353;}
+    a.on{background: #DDDDDD;}
+  }
+  .parameter{
+    padding: 0px 10px;
+    line-height: 30px;
+    .content{background: url("contentbg.jpg") repeat;line-height: 30px;padding: 0px 10px; margin-bottom: 10px;}
+  }
+  .warmtip{
+    .tip{margin:10px 20px; line-height: 30px;}
+  }
+  .consult{
+    .lh30{line-height: 30px;}
+    .ask{padding-left: 20px;background-position: -181px -221px; line-height: 20px; height: 20px; margin-left: 20px; width: auto;color:#525252;}
+    .ans{padding-left: 20px;background-position: -181px -243px; line-height: 20px; height: 20px; margin-left: 20px; width: auto;color: #715830;}
+  }
+  .formitem{ margin-top:10px;
+    span{float: left; display: block; width: 80px;}
+    textarea{border: 1px solid #E4E4E4; width: 370px; height: 110px;}
+    input{line-height: 20px;height: 20px;width: 50px;border: 1px solid #dddddd;padding: 2px 4px;}
+  }
+}
+.rightwapper{width:290px;float: left;
+  .recommend_list{
+    li{margin: 10px; border-bottom:1px solid #dddddd; padding-bottom: 10px;}
+  }
+}

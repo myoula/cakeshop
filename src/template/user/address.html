@@ -1,0 +1,11 @@
+{% extends "layout/user.html" %}{% block css %}member{% endblock %}
+{% block content %}
+{%set messages=handler.get_flashed_messages() %}
+{%if messages%}
+    <div>
+        {% for type, msg in messages%}
+            {{msg}}
+        {% endfor %}
+    </div>
+{%endif%}<div class="mypostion">收货地址</div>	<form action="" method="post" id="addrform">	{{xsrf()}}	<div class="m_form clearfix">		<div class="fs14 mb10">新增收货地址</div>		<div class="item">			<span>配送区域：</span>			<select id="area" name="city"></select>		</div>		<div class="item">			<span>详细地址：</span>			<input type="text" name="address" size="15" value="{{useraddr.address|null}}"  class="fl biginput"><i class="tal">（必填）</i>		</div>		<div class="item">			<span>收货人姓名：</span>			<input type="text" name="name" size="15" value="{{useraddr.name|null}}" class="fl"><i class="tal">（必填）</i>		</div>		<div class="item">			<span>固定电话：</span>			<input type="text" name="tel" size="15" value="{{useraddr.tel|null}}" class="fl">		</div>		<div class="item">			<span>手机号码：</span>			<input type="text" name="mobile" size="15" value="{{useraddr.mobile}}" class="fl"><i class="tal">（必填）</i>		</div>		<div class="item mt20">			<span>&nbsp;</span>			<input type="submit" name="sub" class="ico sub_but"  value="保存收货地址">		</div>	</div>	</form>	<div class="clearfix">		<div class="fs14 pt10 pb10 bt mt20 w_full">已保存的收货地址</div>		{% if address%}		<table width="100%" border="1" rules=rows class="m_table">			<tr class="bgf2">				<td width="5%"></td>				<td width="20%" height="30px">收货人</td>				<td width="40%">地址</td>				<td width="20%">电话</td>				<td width="15%">操作</td>			</tr>			{% for addr in address -%}			<tr>				<td width="5%"></td>				<td height="30px">{{addr.name}}</td>				<td>{{addr.city}} {{addr.region}} {{addr.address}}</td>				<td>{{addr.tel}} {{addr.mobile}}</td>				<td><a href="/user/editaddress/{{addr.id}} ">修改</a> | <a href="/user/deladdress/{{addr.id}} ">删除</a></td>			</tr>			{%- endfor %}		</table>		{% else %}		<p>暂时没有地址</p>		{% endif %}	</div>
+{% endblock %}

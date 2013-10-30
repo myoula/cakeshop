@@ -1,0 +1,240 @@
+{% extends "layout/site.html" %}
+
+{% block title %}{{shop.name}}{% endblock %}
+{% block css %}detail{% endblock %}
+{% block js %}shop{% endblock %}
+{% block content %}
+<div class="blank10"></div>
+<div class="wapper fs16">当前：<a href="/">首页</a> &gt;&gt; <a href="/list/">蛋糕名录</a> &gt;&gt; {{category.name}}</div>
+<div class="blank10"></div>
+<div class="wapper">
+    <div id="cakeimages">
+    	{% for pic in pics -%}
+        	{% if loop.index == 1 %}
+            	<img src="/upload/{{pic.path}}" id="bigimg" width="530px" height="440px">
+            {% endif %}
+		{%- endfor %}
+        
+        <div id="imgplayer">
+        {% for pic in pics -%}
+			<a {% if loop.index == 1 %}class="on"{% endif %}><img src="/upload/{{pic.path}}"></a>
+		{%- endfor %}
+        </div>
+    </div>
+    <div class="cakeinfo">
+        <p class="borbom"><font class="fs22 bigfs"  id="shop" data-id="{{shop.id}}">{{shop.name}}</font><br/><font class="fs18 bigfs">{{shop.ename}}</font></p>
+        <p class="fs22 borbom mt20">价格 <font class="oc" id="price">{{shop.price}}</font> 元</p>
+        <p class="borbom mt20 pb10">{{shop.resume}}</p>
+        <div class="borbom item clearfix bgffffbf">
+            <span>尺寸</span>
+            <div id="size_sel">
+            {% for shopattr in shopattrs -%}
+				<a  data="{{shopattr.price}}" data-id="{{shopattr.id}}">{{shopattr.name}}</a>
+			{%- endfor %}
+            </div>
+            <span>数量</span>
+            <div id="num_sel">
+                <div class="cakenumbox">
+                    <input type="text" name="num" id="num" value="1">
+                    <a class="increase titico"></a>
+                    <a class="decrease titico"></a>
+                </div>
+            </div>
+        </div>
+        <p class="tac mt20"><input type="button" class="titico sbsbut" name="addshop" id="addshop" value=""></p>
+        <div class="borbom item clearfix">
+            <span>甜度</span>
+            <div class="sweet_sel">
+                <em>
+                	{%-for i in range(shop.level)-%}
+                		<i style="width:12px; margin-right:2px" class="fl"></i>
+                    {%-endfor%}
+                </em>
+            </div>
+        </div>
+        
+        <div class="item clearfix pt10">
+            <span>&nbsp;</span>
+            <!-- Baidu Button BEGIN -->
+            <div id="bdshare" class="bdshare_b" style="line-height: 12px;">
+                <img src="http://bdimg.share.baidu.com/static/images/type-button-1.jpg?cdnversion=20120831" />
+                <a class="shareCount"></a>
+            </div>
+            <script type="text/javascript" id="bdshare_js" data="type=button&amp;uid=0" ></script>
+            <script type="text/javascript" id="bdshell_js"></script>
+            <script type="text/javascript">
+                document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000);
+            </script>
+            <!-- Baidu Button END -->
+        </div>
+	</div>
+</div>
+<div class="blank20"></div>
+<div class="wapper borcc">
+    <div class="leftwapper">
+        <div class="tab borbom99">
+            <a class="on">产品参数</a><a href="#warmtip">温馨提示</a><a href="#consultbox">购买疑问</a>
+        </div>
+        <div class="parameter m25">
+            <div class="content">
+            	{% if categoryattrs.count() > 0 -%}
+					{% for categoryattr in categoryattrs -%}
+						{{ categoryattr.name }}：{{ shop.args['attr_' ~ categoryattr.id] }}<br/>
+					{%- endfor %}
+				{%- endif %}
+            </div>
+            {{shop.intro}} 
+        </div>
+        <div class="warmtip" id="warmtip">
+            <div class="fs18 bigfs pl20 tanc borbom99">温馨提示：</div>
+            <div class="tip">
+                {{shop.prompt}} 
+            </div>
+        </div>
+        <div class="consult" id="consultbox">
+            <div class="fs18 bigfs pl20 tanc borbom99">购买咨询：</div>
+            <div class="pl20 lh30 fs14 fw mt10">如购买过程中有任何疑问，欢迎向我们咨询 <a class="oc" href="#consultbox">我要咨询</a></div>
+            <div id="consults"></div>
+            <!--<dl class="mt20">
+                <dt class="titico ask mb5">咨询内容：请问3磅的蛋糕可以切成16块吗？ <font class="fr mr10">2013-08-11 14:13:25</font></dt>
+                <dd class="titico ans mb5">回复：3磅蛋糕可以切分25块感谢您对诺心LECAKE的支持！祝您购物愉快！ <font class="fr mr10">2013-08-11 14:13:25</font></dd>
+            </dl>
+            <dl class="mt20">
+                <dt class="titico ask mb5">咨询内容：请问3磅的蛋糕可以切成16块吗？ <font class="fr mr10">2013-08-11 14:13:25</font></dt>
+                <dd class="titico ans mb5">回复：3磅蛋糕可以切分25块感谢您对诺心LECAKE的支持！祝您购物愉快！ <font class="fr mr10">2013-08-11 14:13:25</font></dd>
+            </dl>-->
+        </div>
+        <div class="blank10"></div>
+
+		<form action="" method="post" id="commentform">
+        <div class="ml20 formitem">
+            <span>咨询内容：</span> <textarea name="content" id="content"></textarea>
+        </div>
+        <div class="ml20 formitem">
+            <span>验证码：</span> <input type="text" name="vcode" id="vcode" maxlength="4"><img class="mt5 ml5" src="/ajax/captcha">
+        </div>
+        <div class="item mt20">
+            <span>&nbsp;</span><input type="submit" class="titico sbut" value="提交">
+        </div>
+        </form>
+        <div class="blank20"></div>
+    </div>
+    <div class="rightwapper">
+        <div class="fs22 bigfs pl20 tanc borbom99 gc6 pt10">应季推荐</div>
+        <ul class="recommend_list">
+            {% for shop in recomshops-%}
+            <li class="tac">
+                <a class="tac fs14" href="/shop/{{shop.ename}}"><img src="/upload/{{ shop.cover }}" width="250"/><br/>{{shop.name}}</a>
+            </li>
+            {%-endfor%}
+        </ul>
+    </div>
+</div>
+
+
+<script>
+Do.ready(function(){
+	$('#imgplayer > a').click(function(){
+		$(this).addClass('on').siblings('a').removeClass('on');
+		$('#bigimg').attr('src',$(this).find('img').attr('src'));
+	})
+    var xsrf='{{handler.xsrf_token}}';
+    var num = 1;
+    var sid = $('#shop').attr('data-id');
+    function loadconsults(sid) {
+        var page = 1;
+        function render(pages, data) {
+            var html = '';
+            var dl = data.length;
+            for (i = 0; i < data.length; i++)
+            {
+                var consult = data[i];
+                html = html + '<dl class="mt20"><dt class="titico ask mb5">咨询内容：' + consult.content + '</dt>';
+				if( consult.reply.length > 0 ){	
+					html = html + '<dd class="titico ans mb5">回复：' + consult.reply + ' <font class="fr mr10">' + new Date(parseInt(consult.replyed) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ") + '</font></dd>';
+				}
+				html = html + '</dl>';
+				console.log(html);
+            }
+            if (pages > 1)
+            {
+                html = html + '<p>';
+                for (i = 1; i <= pages; i++)
+                {
+                    html += '<a href="">'
+                }
+                html = html + '</p>';
+            }
+            $('#consults').html(html);
+        }
+
+        $.getJSON('/ajax/consults/' + sid + '?page' + page, function(data){
+            if (data.total > 0)
+            {
+                render(data.pages, data.data);
+            }
+        });
+    }
+    loadconsults(sid);
+    $('#size_sel a').click(function(event) {
+        $('#size_sel a').removeClass('on');
+        $(this).addClass('on');
+        $('#price').text(parseInt($(this).attr('data'))* $('#num').val());
+        return false;
+    });
+    $('#num').change(function(event) {
+        num = parseInt($(this).val());
+        if ($('#size_sel a.on').size() == 1)
+        {
+            $('#price').text($('#size_sel a.on').attr('data') * num);
+        } 
+    });
+
+    $('#addshop').click(function(event) {
+        if ($('#size_sel a.on').size() == 0)
+        {
+            alert('请选择尺寸');
+            return;
+        }
+        $.post('/ajax/addshop', {sid:sid, said:$('#size_sel a.on').attr('data-id'), num:num, _xsrf:xsrf}, function(data) {
+            switch(data.msg)
+            {
+                case 200:
+                alert('下单成功，跳转购物车。');window.location.href='/order';
+                break;
+                case 400:alert('请选择商品');break;
+                case 403:alert('请先登录');break;
+                case 404:alert('商品已下架');break;
+                case 500:alert('系统出错，请稍后再试');break;
+            }
+        }, 'json');
+    });
+
+    $('#commentform').submit(function(){
+        if ($.trim($('#content').val()) == '' || $.trim($('#vcode').val()) == '')
+        {
+            alert('请输入咨询内容和4位验证码');
+            return false;
+        }
+        $.post('/ajax/comment/' + sid,  $(this).serialize() + '&_xsrf=' + xsrf, function(data) {
+            switch(data.msg)
+            {
+                case 200:alert('评论成功');loadconsults(sid);break;
+                case 400:alert('请输入咨询内容和4位验证码'); break;
+                case 401:alert('请输入正确的验证码');break;
+                case 403:alert('请先登录');break;
+                case 500:alert('系统出错，请稍后再试');break;
+            }
+        }, 'json');
+        return false;
+    });
+	$('#size_sel a:eq(0)').trigger('click');
+})
+</script>
+
+{% endblock %}
+
+{% block foot %}
+{% endblock %}
+
+

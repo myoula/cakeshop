@@ -1,0 +1,33 @@
+{% extends "layout/user.html" %}
+{% block css %}member{% endblock %}
+{% block content %}
+
+<div class="mypostion">我的积分</div>
+<div class="clearfix">
+	<div class="fs20 pt10 pb10 mt20 w_full bigfs ">可用积分 <span class="oc">{{ user.credit }}</span></div>
+	{% if total > 0%}
+	{% set relations = ['亲人', '朋友', '同事', '客户']%}
+	<table width="100%" border="1" rules=rows class="m_table">
+		<tr class="bgf2">
+			<td width="5%"></td>
+			<td width="20%" height="30px">时间</td>
+			<td width="15%">变动积分数</td>
+			<td width="20%">交易类型</td>
+			<td width="40%">备注</td>
+		</tr>
+		{% for log in clogs%}
+		<tr>
+			<td width="5%"></td>
+			<td height="30px">{{log.created|datetimeformat}}</td>
+			<td><span>{{log.affect}}</span></td>
+			<td>{% if log.ctype == 0-%}收入{%-else-%}支出{%-endif%}</td>
+			<td>{{log.log}}</td>
+		</tr>
+		{% endfor %}
+	</table>
+	{{ module.Paginate(total, pagesize, page) }}
+	{% else %}
+	<p>暂时没有积分记录</p>
+	{% endif %}
+</div>
+{% endblock %}

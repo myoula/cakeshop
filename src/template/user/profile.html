@@ -1,0 +1,11 @@
+{% extends "layout/user.html" %}{% block css %}member{% endblock %}
+{% block content %}
+{%set messages=handler.get_flashed_messages() %}
+{%if messages%}
+    <div>
+        {% for type, msg in messages%}
+            {{msg}}
+        {% endfor %}
+    </div>
+{%endif%}<div class="mypostion">我的信息</div><div class="m_form clearfix">	<form action="" method="post">	{{xsrf()}}	<div class="item">		<span>真实姓名：</span><input type="text" name="realname" maxlength=10 size=5 value="{{user.realname}}" placeholder="最多5位" class="fl">	</div>	<div class="item">		<span>性别：</span>		<label class="fl"><input type="radio" class="radio" name="gender" value=0 {%if user.gender == 0-%}checked{%-endif%}>男</label> 		<label class="fl ml10"><input type="radio"  class="radio" name="gender" value=1 {%if user.gender == 1-%}checked{%-endif%}>女</label> 	</div>	<div class="item">		<span>QQ：</span><input type="text" name="qq" maxlength=15 size=10 value="{{user.qq}}" class="fl">	</div>	<div class="item time">		<span>出生年月：</span>		<input type="text" name="birthday" maxlength=12 size=12 value="{{user.birthday}}" class="fl">	</div>	<div class="item">		<span>固定电话：</span><input type="text" name="tel" maxlength=30 size=20 value="{{user.tel}}" class="fl">	</div>	<div class="item mt20">		<span>&nbsp;</span>		<input type="submit" class="ico sub_but" name="sub" value="确认修改">	</div>	</form></div>
+{% endblock %}

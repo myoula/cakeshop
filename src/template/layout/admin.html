@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}管理首页{% endblock %}</title>
+    <link type="text/css" rel="stylesheet" href="/style/css/global.css" />
+    <link type="text/css" rel="stylesheet" href="/style/css/admin.css" />
+    <script src="http://upcdn.b0.upaiyun.com/libs/jquery/jquery-1.7.2.min.js"></script>
+</head>
+
+<body>
+<div class="wapper headbg"><div class="adminhead"></div></div>
+<div class="wapper bg clearfix">
+    <ul class="left pt10">
+        <li><a href="/admin/users">会员管理</a></li>
+        <li><a href="/admin/ads">首页广告</a></li>
+        <li><a href="/admin/categorys">分类管理</a></li>
+        <li><a href="/admin/areas">地区管理</a></li>
+        <li><a href="/admin/shops">商品管理</a></li>
+        <li><a href="/admin/orders">订单管理</a></li>
+        <li><a href="/admin/applys">申请管理</a></li>
+        <li><a href="/admin/distributions">配送方式管理</a></li>
+        <li><a href="/admin/consults">咨询管理</a></li>
+        <li><a href="/admin/password">设置密码</a></li>
+        <li><a href="/admin/pages">介绍管理</a></li>
+        <li><a href="/signout">退出</a></li>
+    </ul>
+    <div class="right"> 
+    	{% block content %}&nbps;{% endblock %}
+    </div>
+</div>
+{% block foot %}{% endblock %}
+</body>
+</html>

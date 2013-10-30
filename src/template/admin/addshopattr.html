@@ -1,0 +1,45 @@
+{% extends "layout/admin.html" %}
+
+{% block title %}添加{{shop.name}}的规格和价格{% endblock %}
+
+{% block content %}
+<div class="mb10 fl"><a class="but" href="/admin/shopattrs/{{shop.id}}">返回{{shop.name}}规格和价格列表</a></div>
+<hr>
+<h1>添加{{shop.name}}的规格和价格</h1>
+
+{%set messages=handler.get_flashed_messages() %}
+
+{%if messages%}
+
+    <div class="alert alert-success">
+
+        {% for type, msg in messages%}
+
+            {{msg}}
+
+        {% endfor %}
+
+    </div>
+
+{%endif%}
+
+<form action="" method="post">
+    {{xsrf()}}
+    <div class="form-group">
+	<label>规格</label>
+    <input type="text" class="input" name="name" maxlength="50" placeholder="最多50位">
+    </div>
+        <div class="form-group">
+	<label>价格</label>
+    <input type="text" class="input" name="price" maxlengt="20" placeholder="数字，最多20位">
+    </div>
+        <div class="form-group">
+<label>排序</label>
+    <input type="text" class="input" name="order" maxlength="3" value={{maxorder}}>
+	</div>
+        <div class="form-group">
+    <input type="submit" name="sub" value="提交" class="sub">
+</div>
+</form>
+
+{% endblock %}

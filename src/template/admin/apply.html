@@ -1,0 +1,56 @@
+{% extends "layout/admin.html" %}
+{% block title %}申请管理{% endblock %}
+{% block content %}
+<div class="fr mr30 mb10">
+        <a class="fs12 fwnm" href="/admin/applys">全部</a>&nbsp;&nbsp;|&nbsp;&nbsp;<form action="" style="display:inline" method="get"><input type="text" style="display:inline" class="input" name="keyword"><input type="submit" name="sub" class="but" value="按公司名或手机搜索"></form>
+    </div>
+<hr>
+  <h1>申请管理</h1>
+{%set messages=handler.get_flashed_messages() %}
+{%if messages%}
+    <div class="msg">
+        {% for type, msg in messages%}
+            <span>{{msg}}</span>
+        {% endfor %}
+    </div>
+{%endif%}
+
+{% if total > 0 -%}
+<table class="table">
+          <thead>
+            <tr>
+              <th>公司名</th>
+              <th>公司详细地址</th>
+              <th>姓名</th>
+              <th>时间</th>
+            </tr>
+          </thead>
+          <tbody>
+
+{% for apply in applys -%}
+
+<tr>
+
+<td >{{ apply.coname }}</td>
+
+<td>{{ apply.city }} {{ apply.region }} {{ apply.address }}</td>
+
+<td >姓名：{{ apply.name }} 电话：{{ apply.tel }} 手机：{{ apply.mobile }}</td>
+
+<td>{{ apply.applyed | datetimeformat}}</td>
+
+</tr>
+
+{%- endfor %}
+
+</table>
+
+{{ module.Paginate(total, pagesize, page) }}
+
+{%- else -%}
+
+<p>暂无申请</p>
+
+{%- endif %}
+
+{% endblock %}

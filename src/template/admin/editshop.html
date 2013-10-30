@@ -1,0 +1,142 @@
+{% extends "layout/admin.html" %}
+{% block title %}修改商品{{shop.name}}{% endblock %}
+{% block content %}
+<div class="mb10 fl"><a class="but" href="/admin/shops">返回商品管理</a></div>
+<hr>
+<h1>修改{{shop.name}}</h1>
+{%set messages=handler.get_flashed_messages() %}
+{%if messages%}
+    <div class="alert alert-success">
+        {% for type, msg in messages%}
+            {{msg}}
+        {% endfor %}
+    </div>
+{%endif%}
+<form action="" method="post">
+    {{xsrf()}}
+    <input type="hidden" name="cover" id="cover" value="{{shop.cover}}">
+    <input type="hidden" name="pics" id="pics" value="{{",".join(pics)}}">
+    <div class="form-group">
+        <label>分类：</label>{{category.name}}
+    </div>
+    <div class="form-group">
+    	<label>品  名：</label><input type="text" name="name" maxlength=80 class="input" value="{{shop.name}}" placeholder="最多80位">
+    </div>
+    <div class="form-group">
+    	<label>英文名：</label><input type="ename"  class="input" name="ename" maxlengt=100 size=20 value="{{shop.ename}}" placeholder="字母和数字，最多100位">
+    </div>
+    <div class="form-group">
+    <label>配图：</label><a href="" id="fileupload">选择图片</a>
+    </div>
+    <div id="prev">
+        {% for pic in pics -%}
+        <p><img src="/upload/{{pic}}" width=75><br><a href="" class="del">删除</a> <a href="" class="cover{% if pic == shop.cover %} on{%-endif%}" data="/upload/{{pic}}">{% if pic == shop.cover -%}取消{%-else-%}设为{%-endif%}封面</a></p>
+        {%- endfor %}
+    </div>
+    {% if category.id == 2 -%}
+    <div class="form-group">
+        <label>价  格</label>
+        <input type="text" class="input"  name="price" maxlength="10" size="10" value="{{shop.price}}">
+    </div>
+    <p>简介：<textarea name="resume" cols=40 rows=3>{{shop.resume}}</textarea>最多255个字</p>
+    {%-else-%}
+    <input type="hidden" name="price" value="{{shop.price}}">
+    <hr>
+{% if categoryattrs.count() > 0 -%}
+{% for categoryattr in categoryattrs -%}
+<div class="form-group">
+<label>
+{{ categoryattr.name }}：</label><input type="text" name="attr_{{categoryattr.id}}" maxlengt=80 size=20 value="{{ shop.args['attr_' ~ categoryattr.id] }}">
+</div>
+{%- endfor %}
+<hr>
+{%- endif %}
+    <div class="form-group">
+<label>级别：</label><select name="level">
+        <option value=1{% if shop.level == 1 %} selected{%-endif%}>1</option>
+        <option value=2{% if shop.level == 2 %} selected{%-endif%}>2</option>
+        <option value=3{% if shop.level == 3 %} selected{%-endif%}>3</option>
+        <option value=4{% if shop.level == 4 %} selected{%-endif%}>4</option>
+        <option value=5{% if shop.level == 5 %} selected{%-endif%}>5</option>
+    </select></div>
+    <div class="form-group">
+<label>简介：</label><textarea name="resume" cols=40 rows=3>{{shop.resume}}</textarea>最多255个字</div>
+    <div class="form-group">
+<label>详细介绍：</label><textarea name="intro" id="intro" cols=60 rows=10>{{shop.intro}}</textarea></div>
+    <div class="form-group">
+<label>友情提示：</label><textarea name="prompt" id="prompt" cols=60 rows=8>{{shop.prompt}}</textarea></div>
+    {%-endif%}
+    <div class="form-group">
+            <label>点击量</label>
+            <input type="text" class="input"  name="views" maxlength="10" size="10" value="{{shop.views}}">
+        </div>
+    <div class="form-group">
+	<input type="submit" name="sub" value="提交"></div>
+</form>
+{% endblock %}
+{% block foot %}
+<script src="/style/xheditor/xheditor-1.2.1.min.js"></script>
+<script src="/style/xheditor/xheditor_lang/zh-cn.js"></script>
+<script src="/style/js/jquery.ocupload.js?v=1"></script>
+
+<script>
+    $('#intro').xheditor({tools:'mini', html5Upload:false, upImgUrl:"/ajax/upload",upImgExt:"jpg,gif,png"});
+    $('#prompt').xheditor({tools:'mini', html5Upload:false, upImgUrl:"/ajax/upload",upImgExt:"jpg,gif,png"});
+
+    function resetpics() {
+        var pics = [];
+        $('#prev p img').each(function(){
+            pics.push($(this).attr('src'));
+        });
+
+        $('#pics').val(pics.join(','));
+    }
+
+    $('#prev p a.del').live('click', function(){
+        if ($(this).next('a').hasClass('on')) {
+            $('#cover').val('');
+        }
+
+        $(this).parent().remove();
+
+        resetpics();
+        return false;
+    });
+
+    $('#prev p a.cover').live('click', function(){
+        if (!$(this).hasClass('on')) {
+            $('#prev p a.on').text('设为封面').removeClass('on');
+            $(this).text('取消封面').addClass('on');
+            $('#cover').val($(this).attr('data'));
+        } else {
+            $(this).text('设为封面').removeClass('on');
+            $('#cover').val('');
+        }
+        
+        return false;
+    });
+
+    var myUpload = $('#fileupload').upload({
+                name: 'filedata',
+                action: '/ajax/upload',
+                enctype: 'multipart/form-data',
+                autoSubmit: true,
+                onClick: function(){
+                    
+                },
+                onSelect: function(){
+                    var ext = myUpload.filename().substr(myUpload.filename().length - 3, 3).toLowerCase();
+                    if (ext != 'jpg' || ext != 'gif' || ext != 'png')
+                    {
+                        return false;
+                    }
+                },
+                onComplete: function(response){
+                    eval('var data = ' + response);
+                    $('#prev').append('<p><img src="' + data.msg +'" width=75><br><a href="" class="del">删除</a> <a href="" class="cover" data="' + data.msg + '">设为封面</a></p>');
+                    resetpics();
+                }
+            });
+    resetpics();
+</script>
+{% endblock %}

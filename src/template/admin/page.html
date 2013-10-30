@@ -1,0 +1,32 @@
+{% extends "layout/admin.html" %}
+
+{% block title %}栏目页管理{% endblock %}
+
+{% block content %}
+<div class="mb10 fl"><a class="but" href="/admin/addpage">添加栏目</a></div>
+<hr>
+<h1>栏目页管理</h1>
+{%set messages=handler.get_flashed_messages() %}
+{%if messages%}
+    <div class="msg">
+        {% for type, msg in messages%}
+            <span>{{msg}}</span>
+        {% endfor %}
+    </div>
+{%endif%}
+
+
+
+{% if pages -%}
+<ul style="width:500px;">
+{% for page in pages -%}
+<li style="line-height:30px;"><a href="/p/{{page.slug}}" target="_blank">{{page.name}}</a>  <a href="/admin/delpage/{{page.id}} "  style="float:right; margin-right:20px;">删除</a> <a style="float:right; margin-right:20px;" href="/admin/editpage/{{page.id}} ">修改</a></li>
+{%- endfor %}
+</ul>
+{%- else -%}
+
+<p>暂无栏目</p>
+
+{%- endif %}
+
+{% endblock %}

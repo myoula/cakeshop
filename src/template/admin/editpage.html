@@ -1,0 +1,51 @@
+{% extends "layout/admin.html" %}
+
+{% block title %}修改栏目{{page.name}}{% endblock %}
+
+{% block content %}
+<div class="mb10 fl"><a class="but" href="/admin/pages">返回栏目页管理</a></div>
+<hr>
+<h1>修改栏目</h1>
+{%set messages=handler.get_flashed_messages() %}
+{%if messages%}
+    <div class="msg">
+        {% for type, msg in messages%}
+            <span>{{msg}}</span>
+        {% endfor %}
+    </div>
+{%endif%}
+
+
+<form action="" method="post">
+
+    {{xsrf()}}
+	<div class="form-group">
+	<label>栏目名</label><input type="text" name="name" class="input" maxlength=20 size=20 value="{{page.name}}" placeholder="最多20位"></div>
+<div class="form-group">
+    <label>访问目录</label><input type="text" name="slug" class="input" maxlengt=20 size=20 value="{{page.slug}}" placeholder="字母和数字，最多20位"></div>
+<div class="form-group">
+    <label>内容</label><textarea name="content" id="content" cols=120 rows=20>{{page.content}}</textarea></div>
+<div class="form-group">
+    <label>模板</label><input type="text" name="template" class="input" maxlengt=20 size=20 value="{{page.template}}" placeholder="最多20位"></div>
+<div class="form-group">
+    <input type="submit" name="sub" value="提交" class="sub">
+</div>
+</form>
+
+{% endblock %}
+
+
+
+{% block foot %}
+
+<script src="/style/xheditor/xheditor-1.2.1.min.js"></script>
+
+<script src="/style/xheditor/xheditor_lang/zh-cn.js"></script>
+
+<script>
+
+    $('#content').xheditor({tools:'FontSize,Bold,FontColor,Strikethrough,Removeformat,Align,List,Link,Unlink,Img', html5Upload:false, upImgUrl:"/ajax/upload",upImgExt:"jpg,gif,png"});
+
+</script>
+
+{% endblock %}

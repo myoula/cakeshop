@@ -1,0 +1,12 @@
+{% extends "layout/site.html" %}
+
+{% block title %}{{page.name}}{% endblock %}
+{% block css %}staticpage{% endblock %}
+{% block content %}
+<div class="blank10"></div>
+<div class="wapper fs16"><a>首页</a> &gt;&gt; {{page.name}}</div>
+<div class="blank10"></div>
+<div class="staticpagecontent borcc ln20 mt20 p20">
+    {{page.content}}
+</div>
+{% endblock %}

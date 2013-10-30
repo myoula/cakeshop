@@ -1,0 +1,36 @@
+{% extends "layout/admin.html" %}
+
+{% block title %}用户管理{% endblock %}
+
+{% block content %}
+	<div class="mb10 fl"></div>
+    <div class="fr mr30 mb10">
+        <a class="fs12 fwnm" href="/admin/users">全部</a>&nbsp;&nbsp;|&nbsp;&nbsp;<form action=""  style="display:inline" method="get"><input type="text" style="display:inline" class="input" name="keyword"><input type="submit" name="sub" class="but" value="按手机搜索"></form>
+    </div>
+    <hr/>
+    <h1>会员管理</h1>
+  	<table class="table">
+          <thead>
+            <tr>
+              <th>手机</th>
+              <th>姓名</th>
+              <th>qq</th>
+              <th>注册时间</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for u in users -%}
+            <tr>
+              <td>{{u.mobile}}</td>
+              <td>{{u.realname}}</td>
+              <td>{{u.qq}}</td>
+              <td>{{u.lsignined|datetimeformat}}</td>
+              <td>{%if u.group < 9 -%}{% if u.group == 1 -%}<a href="/admin/changeuser/{{u.id}}/0">禁用用户</a>{%-else-%}<a href="/admin/changeuser/{{u.id}}/1">启用用户</a>{%-endif%}{%-endif%}</td>
+            </tr>
+			{%- endfor %}
+          </tbody>
+        </table>
+        {{pagehtml}}
+
+{% endblock %}

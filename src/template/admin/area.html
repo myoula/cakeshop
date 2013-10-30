@@ -1,0 +1,45 @@
+{% extends "layout/admin.html" %}
+
+{% block title %}分类管理{% endblock %}
+
+{% block content %}
+<div class="mb10 fl"><a class="but" href="/admin/addarea"  >添加地区</a></div>
+<hr>
+<h1>地区管理</h1>
+{%set messages=handler.get_flashed_messages() %}
+{%if messages%}
+    <div class="msg">
+        {% for type, msg in messages%}
+            <span>{{msg}}</span>
+        {% endfor %}
+    </div>
+{%endif%}
+
+
+{% if areas -%}
+  <table class="table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>地区名</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for area in areas -%}
+            <tr>
+              <td>{{area.id}}</td>
+              <td>{%if area.pid > 0%}&nbsp;&nbsp;{%endif%}{{area.name}}</td>
+              <td><a href="/admin/editarea/{{area.id}} ">修改</a> / <a href="/admin/delarea/{{area.id}} ">删除</a></td>
+            </tr>
+		{%- endfor %}
+          </tbody>
+        </table>
+{%- else -%}
+
+<p>暂无地区</p>
+
+{%- endif %}
+
+
+{% endblock %}

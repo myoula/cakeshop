@@ -1,0 +1,485 @@
+{% extends "layout/site.html" %}
+
+{% block title %}我的购物车{% endblock %}
+{% block css %}order{% endblock %}
+{% block js %}shop{% endblock %}
+{% block content %}
+<style>
+.dp-choose-date{display:none;}
+</style>
+<div class="blank20"></div>
+<div class="wapper">
+      <div class="shoppingprocess pro2"></div>
+</div>
+<div class="blank20"></div>
+{% if orderitems %}
+<div class="wapper">
+    <div class="title borcc borbot0">产品清单<a class="back" href="/order">回到购物车，修改产品 >></a></div>
+    <table  width="100%" border="1" rules="rows" class="m_table">
+        <tr class="bgdd">
+            <td width="2%" height="30px">&nbsp;</td>
+            <td width="68%">商品信息</td>
+            <td width="10%">价格</td>
+            <td width="10%">数量</td>
+            <td width="10%">小计</td>
+        </tr>
+        {% for orderitem in orderitems %}
+        <tr>
+            <td width="2%" height="90px;"></td>
+            <td>
+                <a class="fl"><img src="/upload/{{orderitem.shop.cover}}"></a>
+                <p class="fl ml10 fs12">
+                    <a class="fs14">{{orderitem.shop.name}} </a><br>
+                    {%if orderitem.shopattr -%}规格：{{orderitem.shopattr.name}}{%-endif%} 免费配送10套餐具
+                </p>
+            </td>
+            {%if orderitem.shopattr%}
+            {%set price = orderitem.shopattr.price%}
+            {%else%}
+            {%set price = orderitem.shop.price|float%}
+            {%endif%}
+            <td class="oc">
+                ￥{{price}}
+            </td>
+            <td>
+               <span class="cakenumbox">
+                   <input type="text" size="3" value="{{orderitem.num}}"  readonly>
+               </span>
+            </td>
+            <td>
+                ￥{{price * orderitem.num}} {%if orderitem.shop.cid == 1 and price * orderitem.num > user.credit%}<span id="ctips">(积分不够)</span>{%endif%}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+<div class="blank20"></div>
+<div class="wapper">
+    <div class="title borcc">订货信息</div>
+    <div class="formbase">
+        请确认您的手机号：<input type="text" value="{{user.mobile}}">(必填)<br/>
+        <p class="fs12">在联系不到收货人时，我们将通过该号码联系您！</p>
+    </div>
+</div>
+<div class="wapper">
+    <div class="title borcc">收货信息</div>
+    <div class="formbase clearfix">
+        <div class="item"  id="addrs">
+            
+        </div>
+        <form action="" method="post" id="addrform">
+        <div class="item">
+            <span>配送区域：</span><div>
+            <select id="area" name="city"></select>
+            
+            <!--<input type="text" name="city" size="4"> <input type="text" name="region" size="5">-->
+            </div>
+        </div>
+        <div class="item">
+            <span>详细地址：</span><div><input type="text" name="address" ></div>
+        </div>
+        <div class="item">
+            <span>收货人姓名：</span><div><input type="text" name="name"></div>
+        </div>
+        <div class="item">
+            <span>固定电话：</span><div><input type="text" name="tel"></div>
+        </div>
+        <div class="item">
+            <span>手机号码：</span><div><input type="text" name="mobile" value="{{user.mobile}}"></div>
+        </div>
+        <div class="itembut">
+            <span>&nbsp;</span><input type="submit" name="sub" class="titico bsbut" value="确认收获地址">
+        </div>
+        </form>
+    </div>
+</div>
+<form action="" method="post" id="orderform">
+
+<input type="hidden" name="_xsrf" id="xsrf" value="{{handler.xsrf_token}}">
+
+<input type="hidden" name="uaid" id="uaid" value="0">
+
+<input type="hidden" name="shippingprice" id="shippingprice" value="0">
+
+<input type="hidden" name="distrid" id="distrid" value="1">
+<div class="wapper">
+    <div class="title borcc">配送方式及时间</div>
+    <div class="formbase clearfix borcc">
+    <select name="distribution" id="distribution">
+    {% for distribution in distributions%}
+    <option value="{{distribution.id}}" {% if distribution.id == 1-%}selected{%-endif%}>{{distribution.name}}</option>
+    {% endfor %}
+</select>
+	<div id="cdistribution">
+        <div id="distributionmore"></div>
+        <div>自提时间：<input type="text" name="day" size="12" value="{{tmday}}" id="inputDate"> 
+            <select name="hour">
+                <option value="9">9时</option>
+                <option value="10" selected>10时</option>
+                <option value="11">11时</option>
+                <option value="12">12时</option>
+                <option value="13">13时</option>
+                <option value="14">14时</option>
+                <option value="15">15时</option>
+                <option value="16">16时</option>
+                <option value="17">17时</option>
+            </select>
+        </div>
+	</div>
+    </div>
+</div>
+<div class="wapper">
+    <div class="title borcc borbot0">支付方式</div>
+    <div class="formbase clearfix borcc">
+    	<label><input type="radio" name="payment" value="0"> 货到付款</label>  <label><input type="radio" name="payment" value="1" checked> 支付宝</label>
+    </div>
+</div>
+<div class="blank20"></div>
+<div class="wapper pr overvisible">
+    <div class="formbase borcc clearfix">
+        <div><input type="checkbox" class="radio" id="ordermemocheck" rel="ordermemo">订单附言</div>
+        <div id="ordermemo" class="dn">
+            如有请留言 <br/>
+            <textarea class="borcc" name="message"></textarea>
+        </div>
+        <div><input type="checkbox" class="radio" name="isinvoice" id="isinvoice" value="1" rel="billform">开发票</div>
+        <div id="billform" class="ml30 dn">
+            <div class="item">
+                <span>发票类型：</span><div>普通发票</div>
+            </div>
+            <div class="item">
+                <span>发票抬头：</span><div><label><input type="radio" name="invoicesub" value="0" class="radio" checked> 个人</label>  <label><input type="radio" name="invoicesub" value="0" class="radio"> 单位</label></div>
+            </div>
+            <div class="item">
+                <span>抬头内容：</span><div><input type="text" name="invoicename" id="invoicename"></div>
+            </div>
+            <div class="item">
+                <span>发票内容：</span><div>
+                <label><input type="radio" class="radio"  name="invoicecontent" value="0" checked> 蛋糕</label>  <label><input type="radio" class="radio" name="invoicecontent" value="1"> 食品</label></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="blank20"></div>
+<div class="wapper pr overvisible" style="height:150px;">
+    <div class="ordersubmit">
+        <table width="100%">
+            <tr>
+                <td>商品总计：</td><td>￥{{order.price}}元</td>
+            </tr>
+            {%if distributions %}
+            <tr>
+                <td>配送费：</td><td>￥<font id="sp">{{distributions[0].price}}</font>元</td>
+            </tr>
+            {%endif%}
+            <tr>
+                <td>总计：</td><td>￥<font id="tp">{{order.price + distributions[0].price}}</font>元 + {{credit}}积分</td>
+            </tr>
+        </table>
+        <div class="ordersubbut">
+            核对以上信息，确认无误后点击<input type="submit" name="sub" class="titico bsbut ml30" value="提交订单"/>
+        </div>
+    </div>
+</div>
+</form>
+<div class="blank20"></div>
+{% endif %}
+<script>
+Do.add('DatePickerCss' ,{
+	path : '/style/css/datepicker.css',
+	type : 'css'
+})
+Do.add('date',{
+	path : '/style/js/date.js',
+	type : 'js'
+})
+Do.add('DatePicker',{
+	path : '/style/js/jquery.datePicker.js',
+	type : 'js',
+	requires: ['DatePickerCss']
+})
+Do.ready(function(){
+    var xsrf = $('#xsrf').val();
+    var op = {{order.price}};
+    var sp = {{distributions[0].price}};
+    var distributions = {};
+    {% for distribution in distributions -%}
+    	distributions[{{distribution.id}}] = {price : {{distribution.price}}, content : '{{distribution.content}}', list : []};
+    	{% for cd in distribution.list -%}
+    		distributions[{{distribution.id}}].list.push([{{cd.id}}, '{{cd.name}}', {{cd.price}}, '{{cd.content}}']);
+    	{%endfor-%}
+    {%endfor%}
+    $('#shippingprice').val(parseFloat(distributions[1].price));
+
+    function loaduseraddrs()
+
+    {
+
+        function render(useraddrs)
+
+        {
+
+            var html = '';
+
+
+
+            for (i = 0; i < useraddrs.length; i++)
+
+            {
+
+                var useraddr = useraddrs[i];
+
+                html += '<div class="item"><span><input type="radio" name="uaitem" value="' + useraddr.id + '" class="uaitem_' + useraddr.id + ' radio"></span><div class="fl">' + useraddr.city + ' ' + useraddr.region + ' ' + useraddr.address + ' ' + useraddr.name + ' ' + useraddr.mobile + '</div><a data-id=" ' +  useraddr.id + '" class="oc ml10 fl">删除</a></div>';
+
+            }
+
+
+
+            if (html != '') $('#addrform').hide();
+
+
+
+            html +='<div class="item"><span><input type="radio" name="uaitem" class="radio" value="0"></span><div class="fl">其他地址</div>';
+
+
+
+            $('#addrs').html(html);
+
+
+
+            var uaid = parseInt($('#uaid').val());
+
+
+
+            if ($('#addrs input.uaitem_' + uaid).size() == 0) {
+
+                var el = $("#addrs input:radio:first");
+
+                el.attr('checked', true);
+
+                $('#uaid').val(el.val());
+
+            }
+
+        }
+
+
+
+        $.getJSON('/ajax/useraddrs', function(data){
+
+            render(data);
+
+        });
+
+    }
+
+    
+
+    loaduseraddrs();
+
+
+
+    $('#addrs input:radio').live('click', function(event) {
+
+        var uaid = $(this).val();
+
+        $('#uaid').val(uaid);
+
+
+
+        $('#addrform').hide();
+
+        if (uaid == 0) {
+
+            $('#addrform').show();
+
+        }
+
+    });
+
+
+
+    $('#addrs a').live('click', function(){
+
+        if (confirm('确定删除'))
+
+        {
+
+            var uaid = $(this).attr('data-id');
+
+            $.getJSON('/ajax/deladdr/' + uaid, function(data){
+
+                switch(data.msg)
+
+                {
+
+                    case 200:
+
+                    loaduseraddrs();
+
+                    $('#addrform').hide();
+
+
+
+                    break;
+
+                    case 403:
+
+                    alert('请先登录');
+
+                    break;
+
+                    case 500:
+
+                    alert('系统出错，请稍后再试');
+
+                    break;
+
+                }
+
+            });
+
+        }
+
+        return false;
+
+    })
+
+
+
+    $('#addrform').submit(function(event) {
+
+        $.post('/ajax/addaddr', $(this).serialize() + '&_xsrf=' + xsrf, function(data){
+
+            switch(data.msg)
+
+            {
+
+                case 200:
+
+                loaduseraddrs();
+
+                break;
+
+                case 400:
+
+                alert('请输入详细的联系方式');
+
+                break;
+
+                case 403:
+
+                alert('请先登录');
+
+                break;
+
+                case 500:
+
+                alert('系统出错，请稍后再试');
+
+                break;
+
+                case 503:
+
+                alert('此地址已存在');
+
+                break;
+
+            }
+
+        }, 'json');
+
+        return false;
+
+    });
+
+
+
+    $('#distribution').change(function(){
+
+        if ($(this).val() == 2) {
+
+            if ($('#distributionmore').html() == '')
+
+            {
+
+                var html = '';
+
+                for (i = 0; i < distributions[$(this).val()].list.length; i++)
+
+                {
+
+                    var d = distributions[$(this).val()].list[i];
+
+                    html += '<p>';
+
+                    html += '<input type="radio" name="cdistribution" value="' + d[0] + '" data="' + d[2] + '"> ' + d[1] + ' 地址：' + d[3] + ' <a href="http://map.baidu.com/?s=s%26wd%3D' + d[3] + '" target="_blank">查看地图</a>';
+
+                    html += '</p>';
+
+                }
+
+                $('#distributionmore').html(html);
+
+
+
+                var el = $("#distributionmore input:radio:first");
+
+                el.attr('checked', true);
+
+                $('#distrid').val(el.val());
+
+                sp = el.attr('data');
+
+            }
+
+            
+
+            $('#cdistribution').show();
+
+        } else {
+
+            $('#cdistribution').hide();
+
+            $('#distrid').val(1);
+
+            sp = distributions[1].price;
+
+        }
+
+        $('#shippingprice').val(sp);
+
+        $('#sp').text(sp);
+
+        $('#tp').text(op + sp);
+
+    });
+	$('#ordermemocheck').change(function(){
+		if($(this).attr('checked')){
+			$('#ordermemo').show();
+		}else{
+			$('#ordermemo').hide();
+		}
+	})
+	$('#isinvoice').change(function(){
+		if($(this).attr('checked')){
+			$('#billform').show();
+		}else{
+			$('#billform').hide();
+		}
+	})
+	Do('date');
+	Do('DatePicker',function(){
+		$('#inputDate').datePicker({clickInput:true});
+	})
+})
+
+
+</script>
+{% endblock %}
+
+{% block foot %}
+
+
+
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends "layout/site.html" %}
+{% block css %}free{% endblock %}
+{% block js %}shop{% endblock %}
+{% block title %}集团购买/会员特惠{% endblock %}
+
+{% block content %}
+
+<div class="blank2"></div>
+<div class="wapper"><img src="/style/css/nav_free.jpg"/></div>
+<div class="blank10"></div>
+<div class="wapper fs16">
+    <a>首页</a> 》 <a>集团购买／会员特惠</a> 》 <a>免费品尝</a>
+</div>
+<div class="blank10"></div>
+<div class="free_box clearfix">
+	<form action="" method="post">
+	{{xsrf()}}
+    <div class="free_form fl">
+    	<div class="items">
+        	{%set messages=handler.get_flashed_messages() %}
+				{%if messages%}
+				<span>&nbsp;</span>
+        		{% for type, msg in messages%}
+            		<div class="rc">{{msg}}!</div>
+        		{% endfor %}
+			{%endif%}
+        </div>
+        <div class="items">
+            <span>您的公司全称：</span>
+			<input type="text" name="coname" class="fl biginput" maxlength="80">
+        </div>
+        <div class="items">
+            <span>您的公司地址：</span>
+			<select id="area" name="city"></select>
+        </div>
+        <div class="items">
+            <span>详细地址：</span>
+			<input type="text" name="address" maxlength="100" class="fl">
+        </div>
+        <div class="items">
+            <span>公司人数：</span><input type="txt" name="username"
+			<input type="text" name="pnumber" maxlength="6" class="fl"><em class="fs14 fl gc6 ml10">人</em>
+        </div>
+        <div class="items">
+            <span>您的姓名：</span> 
+			<input type="text" name="name" maxlength="20" class="fl">
+        </div>
+        <div class="items">
+            <span>您的办公电话：</span>
+			<input type="text" name="tel" maxlength="30" class="fl">
+        </div>
+        <div class="items">
+            <span>您的手机号码：</span>
+			<input type="text" name="mobile" maxlength="11" class="fl">
+        </div>
+        <div class="blank10"></div>
+        <div class="tac">
+        	<input type="submit" value="确定" name="sub" class="titico sbut"/>
+        </div>
+    </div>
+	</form>
+    <div class="free_word fr">
+        <p class="fs16 fw brown mb20">我们希望吧吉米的厨房分享给更多的人，申报试吃条件，活动完全免费哦！</p>
+        <p class="brown">1 试吃活动对象：公司企业或机构单位；</p>
+        <p class="brown">2 试吃活动人数：需有12个或以上人员参与；  </p>
+        <p class="brown">3 试吃活动场所：需要提供茶水间、会议室、休息室或可聚集场地； </p>
+        <p class="brown">4 试吃蛋糕介绍：吉米厨房销售人员需要当场切分蛋糕，并为大家做简短介绍；</p>
+
+        <p class="fs16 fw brown mb20 mt20">如果您满足以上条件并有兴趣品尝。请按一下方式申请：</p>
+        <p class="brown"> a 吉米的厨房官网在线申请，填写信息即可 </p>
+        <p class="brown">b 拨打0519-81297639客户热线咨询申请；</p>
+        <p class="brown">c 与吉米的厨房的销售人员申请</p>
+    </div>
+	
+</div>
+
+{% endblock %}
