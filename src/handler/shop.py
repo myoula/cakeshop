@@ -149,6 +149,12 @@ class SettleHandler(BaseHandler):
         try:
             order = Order.get(uid = user.id, status = 0)
             
+            try:
+                mobile = '18014349809'
+                sendmsg(self.settings, mobile, '新订单')
+            except:
+                pass
+                
             for orderitem in OrderItem.select().where(OrderItem.oid == order.id).dicts():
                 try:
                     orderitem['shop'] = Shop.get(id = orderitem['sid'])
@@ -264,12 +270,6 @@ class SettleHandler(BaseHandler):
                         logging.error(ex)
                 
                 tn = "U%d-S%d" % (user.id, order.id)
-                
-                try:
-                    mobile = '18014349809'
-                    sendmsg(self.settings, mobile, '新订单：' + tn)
-                except:
-                    pass
                 
                 if int(payment) == 1:
                     self.redirect("/alipay/topay?tn=%s&body=%s&price=%f" % (tn, body, order.price))
