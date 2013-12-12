@@ -1,2 +1,3 @@
 doc/
 *.pyc
+.DS_Store
