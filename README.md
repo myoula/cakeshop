@@ -74,3 +74,6 @@ python manager.py --cmd=syncdb
 三 开始运行
 supervisorctl restart all
 service nginx restart
+
+#赞助
+谢谢yxvm赞助支持 https://yxvm.com/
