@@ -75,5 +75,4 @@ python manager.py --cmd=syncdb
 supervisorctl restart all
 service nginx restart
 
-#赞助
-谢谢yxvm赞助支持 https://yxvm.com/
+[![Powered by DartNode](https://dartnode.com/branding/DN-Open-Source-sm.png)](https://dartnode.com "Powered by DartNode - Free VPS for Open Source")
